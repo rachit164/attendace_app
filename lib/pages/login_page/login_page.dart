@@ -63,6 +63,10 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height * 0.06,
               ),
+              DropdownButtonExample(),
+              SizedBox(
+                height: height * 0.005,
+              ),
               Container(
                 padding: const EdgeInsets.all(10.0),
                 child: const TextField(
@@ -171,6 +175,61 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DropdownButtonExample extends StatefulWidget {
+  const DropdownButtonExample({super.key});
+
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  static List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+  String? dropdownValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      color: AppColors.loginPageInputText,
+      padding: EdgeInsets.all(8),
+      width: double.infinity,
+      child: DropdownButton<String>(
+        value: dropdownValue,
+        hint: Text(
+          'Please select a Company',
+          style: TextStyle(
+              fontSize: 16, fontFamily: 'Inter', color: AppColors.greyColor),
+        ),
+        isExpanded: true,
+        icon: const Icon(Icons.arrow_drop_down),
+        style: const TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          color: Colors.transparent,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        onChanged: (String? value) {
+          // This is called when the user selects an item.
+          setState(() {
+            dropdownValue = value!;
+          });
+        },
+        items: list.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.blackColor,
+                  fontFamily: 'Inter'),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
