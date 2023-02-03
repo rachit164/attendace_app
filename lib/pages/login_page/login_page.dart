@@ -1,7 +1,10 @@
 import 'package:attendance_app/pages/home_page/home_page.dart';
+import 'package:attendance_app/providers/auth_provider.dart';
+import 'package:attendance_app/providers/drop_down_list.dart';
 import 'package:attendance_app/utils/colors.dart';
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,11 +27,18 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {});
       });
     });
+    var dropDownData =
+        Provider.of<DropDownProvider>(context, listen: false).dropDown();
     super.initState();
   }
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<Auth>(context, listen: false);
+
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -63,15 +73,16 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height * 0.06,
               ),
-              DropdownButtonExample(),
+              Dropdown(),
               SizedBox(
                 height: height * 0.005,
               ),
               Container(
                 padding: const EdgeInsets.all(10.0),
-                child: const TextField(
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 16),
-                  decoration: InputDecoration(
+                child: TextField(
+                  controller: emailController,
+                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
+                  decoration: const InputDecoration(
                     hintText: 'Email',
                     prefixIcon: Icon(
                       Icons.email_outlined,
@@ -90,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                           BorderSide(color: AppColors.blueColor, width: 2),
                     ),
                   ),
+                  keyboardType: TextInputType.emailAddress,
                 ),
               ),
               SizedBox(
@@ -98,10 +110,11 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: const EdgeInsets.all(10.0),
                 child: TextField(
+                  controller: passwordController,
                   focusNode: _focusNodes[0],
                   obscureText:
                       _focusNodes[0].hasFocus ? !_passwordVisible : true,
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 16),
+                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
                   decoration: InputDecoration(
                     hintText: 'Password',
                     prefixIcon: IconButton(
@@ -159,17 +172,23 @@ class _LoginPageState extends State<LoginPage> {
                     minimumSize: const Size.fromHeight(50), // NEW
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
+                    authProvider.login(emailController.text.toString(),
+                        passwordController.text.toString());
+                    print(emailController);
+                    print(passwordController);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const HomePage(),
+                    //   ),
+                    // );
                   },
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
-                  ),
+                  child: authProvider.loading
+                      ? CircularProgressIndicator()
+                      : Text(
+                          'Sign In',
+                          style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
+                        ),
                 ),
               ),
             ],
@@ -180,15 +199,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
+class Dropdown extends StatefulWidget {
+  const Dropdown({super.key});
 
   @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+  State<Dropdown> createState() => _Dropdown();
 }
 
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  static List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+class _Dropdown extends State<Dropdown> {
+  static List<String> list = ['One', 'Two', 'Three', 'Four'];
   String? dropdownValue;
 
   @override
