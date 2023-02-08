@@ -5,10 +5,14 @@ import 'dart:math';
 import 'package:attendance_app/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
+  var token;
+  var result;
+  String? userName;
 
   setLoading(bool value) {
     _loading = value;
@@ -39,24 +43,28 @@ class Auth with ChangeNotifier {
             // 'EmailId': 'admin@vertexplus.com',
             // 'Password': 'password123',
           }));
-      print(response.body);
+      // print(response.body);
       final responseData = json.decode(response.body);
-      // if (responseData['error'] != null) {
-      //   print(responseData);
-      //   throw HttpException(responseData['error']['message']);
-      // }
-      //
+
       if (responseData['Success'] == true) {
         print("Successful");
+
         setLoading(false);
       } else {
         setLoading(true);
         print("failed");
       }
+      result = responseData['Result'];
+      token = result['Token'];
+      print(token);
+      userName = result['UserName'];
     } catch (e) {
       setLoading(false);
       print(e.toString());
     }
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token).toString();
+
     notifyListeners();
   }
 }

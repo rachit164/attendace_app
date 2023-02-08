@@ -15,11 +15,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late bool _passwordVisible;
-  @override
-  List<FocusNode> _focusNodes = [
+  final List<FocusNode> _focusNodes = [
     FocusNode(),
     FocusNode(),
   ];
+  final GlobalKey<FormState> _formKey = GlobalKey();
   void initState() {
     _passwordVisible = false;
     _focusNodes.forEach((node) {
@@ -35,6 +35,30 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  String? get _errorText {
+    // at any time, we can get the text from _controller.value.text
+    final text = emailController.value.text;
+    // Note: you can do your own custom validation here
+    // Move this logic this outside the widget for more testable code
+    if (text.isEmpty) {
+      return 'Can\'t be empty';
+    }
+    if (!text.contains('@')) {
+      return 'Invalid Email';
+    }
+    // return null if the text is valid
+    return null;
+  }
+
+  void validateAndSave() {
+    final FormState? form = _formKey.currentState;
+    if (form!.validate()) {
+      print('Form is valid');
+    } else {
+      print('Form is invalid');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<Auth>(context, listen: false);
@@ -47,151 +71,160 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           color: Colors.white,
           margin: EdgeInsets.only(top: height * 0.08),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: width * 0.03),
-                child: Image.asset(
-                  "assets/images/logo_login.png",
-                  width: width * 0.13,
-                  height: height * 0.13,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: width * 0.03),
-                child: BigText(
-                  text: "Sign In",
-                  color: AppColors.blackColor,
-                  size: 25,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.06,
-              ),
-              Dropdown(),
-              SizedBox(
-                height: height * 0.005,
-              ),
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  controller: emailController,
-                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                    prefixIcon: Icon(
-                      Icons.email_outlined,
-                    ),
-                    hintStyle: TextStyle(color: Colors.grey),
-                    filled: true,
-                    fillColor: AppColors.loginPageInputText,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                      borderSide:
-                          BorderSide(color: Colors.transparent, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide:
-                          BorderSide(color: AppColors.blueColor, width: 2),
-                    ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: width * 0.03),
+                  child: Image.asset(
+                    "assets/images/logo_login.png",
+                    width: width * 0.13,
+                    height: height * 0.13,
                   ),
-                  keyboardType: TextInputType.emailAddress,
                 ),
-              ),
-              SizedBox(
-                height: height * 0.005,
-              ),
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  controller: passwordController,
-                  focusNode: _focusNodes[0],
-                  obscureText:
-                      _focusNodes[0].hasFocus ? !_passwordVisible : true,
-                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    prefixIcon: IconButton(
-                      icon: const Icon(
-                        // Based on passwordVisible state choose the icon
-                        Icons.lock,
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: width * 0.03),
+                  child: BigText(
+                    text: "Sign In",
+                    color: AppColors.blackColor,
+                    size: 25,
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.06,
+                ),
+                Dropdown(),
+                SizedBox(
+                  height: height * 0.005,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextFormField(
+                    controller: emailController,
+                    validator: (value) {
+                      if (value!.isEmpty || !value.contains('@')) {
+                        return 'Invalid email!';
+                      }
+                      return null;
+                    },
+                    style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
+                    decoration: const InputDecoration(
+                      hintText: 'Email',
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
                       ),
-                      onPressed: () {},
-                    ),
-
-                    // _focusNodes[0].hasFocus
-                    //     ? Image.asset("assets/images/password_active_icon.png")
-                    //     : Image.asset("assets/images/password_icon.png"),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        // Based on passwordVisible state choose the icon
-                        _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Theme.of(context).primaryColorDark,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      filled: true,
+                      fillColor: AppColors.loginPageInputText,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 2),
                       ),
-                      onPressed: () {
-                        // Update the state i.e. toogle the state of passwordVisible variable
-                        _focusNodes[0].hasFocus
-                            ? setState(() {
-                                _passwordVisible = !_passwordVisible;
-                              })
-                            : null;
-                      },
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: AppColors.blueColor, width: 2),
+                      ),
                     ),
-                    hintStyle: TextStyle(color: Colors.grey),
-                    filled: true,
-                    fillColor: AppColors.loginPageInputText,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                      borderSide:
-                          BorderSide(color: Colors.transparent, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide:
-                          BorderSide(color: AppColors.blueColor, width: 2),
-                    ),
+                    keyboardType: TextInputType.emailAddress,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: height * 0.005,
-              ),
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.blueColor,
-                    minimumSize: const Size.fromHeight(50), // NEW
-                  ),
-                  onPressed: () {
-                    authProvider.login(emailController.text.toString(),
-                        passwordController.text.toString());
-                    print(emailController);
-                    print(passwordController);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const HomePage(),
-                    //   ),
-                    // );
-                  },
-                  child: authProvider.loading
-                      ? CircularProgressIndicator()
-                      : Text(
-                          'Sign In',
-                          style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
+                SizedBox(
+                  height: height * 0.005,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: passwordController,
+                    focusNode: _focusNodes[0],
+                    obscureText:
+                        _focusNodes[0].hasFocus ? !_passwordVisible : true,
+                    style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      prefixIcon: IconButton(
+                        icon: const Icon(
+                          // Based on passwordVisible state choose the icon
+                          Icons.lock,
                         ),
+                        onPressed: () {},
+                      ),
+
+                      // _focusNodes[0].hasFocus
+                      //     ? Image.asset("assets/images/password_active_icon.png")
+                      //     : Image.asset("assets/images/password_icon.png"),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          _focusNodes[0].hasFocus
+                              ? setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                })
+                              : null;
+                        },
+                      ),
+                      hintStyle: TextStyle(color: Colors.grey),
+                      filled: true,
+                      fillColor: AppColors.loginPageInputText,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: AppColors.blueColor, width: 2),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: height * 0.005,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.blueColor,
+                      minimumSize: const Size.fromHeight(50), // NEW
+                    ),
+                    onPressed: () {
+                      authProvider.login(emailController.text.toString(),
+                          passwordController.text.toString());
+                      print(emailController);
+                      print(passwordController);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    },
+                    child: authProvider.loading
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Sign In',
+                            style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
+                          ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -209,28 +242,38 @@ class Dropdown extends StatefulWidget {
 class _Dropdown extends State<Dropdown> {
   static List<String> list = ['One', 'Two', 'Three', 'Four'];
   String? dropdownValue;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      color: AppColors.loginPageInputText,
-      padding: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: AppColors.loginPageInputText,
+          borderRadius: BorderRadius.circular(8)),
       width: double.infinity,
-      child: DropdownButton<String>(
+      padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
+      child: DropdownButtonFormField(
         value: dropdownValue,
-        hint: Text(
+        decoration: const InputDecoration(
+          prefixIcon: Icon(Icons.person, color: AppColors.greyColor),
+          enabledBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderSide: BorderSide(color: Colors.transparent),
+          ),
+        ),
+        hint: const Text(
           'Please select a Company',
           style: TextStyle(
               fontSize: 16, fontFamily: 'Inter', color: AppColors.greyColor),
         ),
         isExpanded: true,
         icon: const Icon(Icons.arrow_drop_down),
-        style: const TextStyle(color: Colors.deepPurple),
-        underline: Container(
-          color: Colors.transparent,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        style: const TextStyle(color: AppColors.loginPageInputText),
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         onChanged: (String? value) {
           // This is called when the user selects an item.
           setState(() {
@@ -242,7 +285,7 @@ class _Dropdown extends State<Dropdown> {
             value: value,
             child: Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   color: AppColors.blackColor,
                   fontFamily: 'Inter'),

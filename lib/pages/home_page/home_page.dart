@@ -1,8 +1,12 @@
 import 'package:attendance_app/pages/my_attendance/my_attendance.dart';
+import 'package:attendance_app/pages/punching/punching.dart';
 import 'package:attendance_app/utils/colors.dart';
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/auth_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +15,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final authProvider = Provider.of<Auth>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColors.loginPageInputText,
       body: SingleChildScrollView(
@@ -133,29 +139,39 @@ class HomePage extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height: width * 0.43,
-                        width: width * 0.43,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/images/leave_tracker_icon2x.png",
-                              width: width * 0.10,
-                              height: height * 0.10,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PunchingPage(),
                             ),
-                            TextLight(
-                              text: 'Leave Tracker',
-                              size: 16,
-                            )
-                          ],
+                          );
+                        },
+                        child: Container(
+                          height: width * 0.43,
+                          width: width * 0.43,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/leave_tracker_icon2x.png",
+                                width: width * 0.10,
+                                height: height * 0.10,
+                              ),
+                              TextLight(
+                                text: 'Leave Tracker',
+                                size: 16,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],

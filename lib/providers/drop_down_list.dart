@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import '../utils/app_constants.dart';
 
 class DropDownProvider with ChangeNotifier {
-  List<DropDown> _dropDownList = [];
-  List<DropDown> get dropDownList => _dropDownList;
+  List<DropDown> _dropDownItems = [];
 
   Future<void> dropDown() async {
     try {
@@ -24,10 +23,29 @@ class DropDownProvider with ChangeNotifier {
       // print(list);
       // _dropDownList = [];
       // _dropDownList.addAll(DropDown.fromJson(response.body).dropdown);
-      final responseData = json.decode(response.body);
-      List<dynamic> list = responseData;
-      DropDown data = DropDown.fromJson(list[0]);
-      print(data);
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        if (responseData == null) {
+          return;
+        }
+        List<DropDown> _dropDownList = [];
+        responseData.forEach((key, value) {
+          _dropDownList.add(
+            DropDown(
+              companyName: value['CompanyName'],
+              companyCode: value['CompanyCode'],
+              companyId: value['CompanyId'],
+            ),
+          );
+        });
+        _dropDownItems = _dropDownList.toList();
+        print(_dropDownItems);
+
+        //  return responseData.map((data) => DropDown.fromJson(data)).toList;
+
+      } else {
+        throw Exception('Unexpected error occured');
+      }
     } catch (e) {
       print(e.toString());
     }

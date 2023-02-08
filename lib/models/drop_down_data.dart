@@ -5,7 +5,10 @@ class DropDown {
   // late List<DropDown>? _dropdown;
   // List<DropDown> get dropdown => _dropdown!;
 
-  DropDown({this.companyId, this.companyName, this.companyCode});
+  DropDown(
+      {required this.companyId,
+      required this.companyName,
+      required this.companyCode});
 
   DropDown.fromJson(Map<String, dynamic> json) {
     companyId = json['CompanyId'];
