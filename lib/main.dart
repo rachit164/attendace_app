@@ -6,6 +6,7 @@ import 'package:attendance_app/pages/punching/punching.dart';
 import 'package:attendance_app/pages/splash_screen/splash_screen.dart';
 import 'package:attendance_app/providers/auth_provider.dart';
 import 'package:attendance_app/providers/drop_down_list.dart';
+import 'package:attendance_app/providers/punching_provider.dart';
 import 'package:attendance_app/utils/colors.dart';
 import 'package:attendance_app/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Auth()),
-        ChangeNotifierProvider(create: (_) => DropDownProvider())
+        ChangeNotifierProvider(create: (_) => DropDownProvider()),
+        ChangeNotifierProvider(create: (_) => PunchingProvider())
       ],
       child: MaterialApp(
           theme: ThemeData(
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
                 ),
           ),
           routes: {
-            "/": (context) => const SplashScreen(),
+            "/": (context) => const HomePage(),
             MyRoutes.homepage: (context) => const HomePage(),
             MyRoutes.myAttendance: (context) => const MyAttendance(),
             MyRoutes.punching: (context) => const PunchingPage(),

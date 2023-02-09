@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/home_page/home_page.dart';
+
 class Auth with ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
@@ -19,7 +21,8 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(
+      String email, String password, BuildContext context) async {
     setLoading(true);
 
     try {
@@ -48,7 +51,9 @@ class Auth with ChangeNotifier {
 
       if (responseData['Success'] == true) {
         print("Successful");
-
+        setLoading(true);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         setLoading(false);
       } else {
         setLoading(true);
@@ -63,7 +68,8 @@ class Auth with ChangeNotifier {
       print(e.toString());
     }
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token).toString();
+    await prefs.setString("token", token).toString();
+    await prefs.setString("userName", userName!).toString();
 
     notifyListeners();
   }

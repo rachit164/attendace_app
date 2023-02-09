@@ -4,9 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 
+import '../../providers/punching_provider.dart';
 import '../../utils/colors.dart';
+import 'dart:convert';
 
 class PunchingPage extends StatefulWidget {
   const PunchingPage({Key? key}) : super(key: key);
@@ -16,78 +20,106 @@ class PunchingPage extends StatefulWidget {
 }
 
 class _PunchingPageState extends State<PunchingPage> {
-  @override
-  Widget build(BuildContext context) {
-    String? hours;
-    String? minutes;
-    //get latitude and departure
-    void _determinePosition() async {
-      bool serviceEnabled;
-      DateTime dt = DateTime.now();
-      String hour = dt.hour.toString();
-      print(hour); //output (24 hour format): 20
+  double? latitude1;
+  double? longitude;
+  bool _isIn = false;
+  String inTime = "";
+  String outTime = "";
+  DateTime datetime = DateTime.now();
+  String punchIn = "", punchOut = "";
+  void _determinePosition() async {
+    bool serviceEnabled;
+    DateTime dt = DateTime.now();
+    String hour = dt.hour.toString();
+    print(hour); //output (24 hour format): 20
 
-      String minute = dt.minute.toString();
-      print(minute);
+    String minute = dt.minute.toString();
+    print(minute);
 
-      String second = dt.second.toString();
-      print(second);
+    String second = dt.second.toString();
+    print(second);
 
-      LocationPermission permission;
-      // Test if location services are enabled.
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        // Location services are not enabled don't continue
-        // accessing the position and request users of the
-        // App to enable the location services.
-        return Future.error('Location services are disabled.');
-      }
+    LocationPermission permission;
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
 
-      permission = await Geolocator.checkPermission();
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          // Permissions are denied, next time you could try
-          // requesting permissions again (this is also where
-          // Android's shouldShowRequestPermissionRationale
-          // returned true. According to Android guidelines
-          // your App should show an explanatory UI now.
-          return Future.error('Location permissions are denied');
-        }
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
       }
-
-      if (permission == LocationPermission.deniedForever) {
-        // Permissions are denied forever, handle appropriately.
-        return Future.error(
-            'Location permissions are permanently denied, we cannot request permissions.');
-      }
-
-      // When we reach here, permissions are granted and we can
-      // continue accessing the position of the device.
-      print('Printing text before getCurrentLocation()');
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.low);
-      print(position);
     }
 
-    void time() {
-      DateTime dt = DateTime.now();
-      hours = dt.hour.toString();
-      print(hours); //output (24 hour format): 20
-
-      minutes = dt.minute.toString();
-      print(minutes);
-
-      String second = dt.second.toString();
-      print(second);
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    print('Printing text before getCurrentLocation()');
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
+
+    latitude1 = position.latitude;
+    longitude = position.longitude;
+  }
+
+  @override
+  void initState() {
+    // final punchdata = Provider.of<PunchingProvider>(context, listen: false);
+    // print(punchdata);
+    _determinePosition();
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {
+      punchIn = "";
+      punchOut = "";
+    });
+
+    getLastPunching();
+  }
+
+  void getLastPunching() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? punchTimeData = prefs.getString("punchTime");
+    print("=====punchTime====");
+    print(punchTimeData);
+    print("=====punchTime====");
+    if (punchTimeData != null) {
+      final body = json.decode(punchTimeData);
+      print("=====body====");
+      print(body);
+      print("=====body====");
+    }
+  }
+
+  //get latitude and departure
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
     @override
+    final punching = Provider.of<PunchingProvider>(context, listen: false);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    DateTime datetime = DateTime.now();
-    String formattedDate = DateFormat('kk:mm a').format(datetime);
-    print(formattedDate);
+    //  DateTime datetime = DateTime.now();
+    // String formattedDate = DateFormat('kk:mm a').format(datetime);
     return Scaffold(
       body: Stack(
         children: [
@@ -156,7 +188,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               height: height * 0.005,
                             ),
                             TextLight(
-                              text: formattedDate,
+                              text: "==",
                               color: AppColors.iconColors,
                               size: height * 0.023,
                             )
@@ -173,7 +205,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               height: height * 0.005,
                             ),
                             TextLight(
-                              text: "--:--",
+                              text: "===",
                               color: AppColors.iconColors,
                               size: height * 0.023,
                             ),
@@ -252,7 +284,12 @@ class _PunchingPageState extends State<PunchingPage> {
                       height: height * 0.03,
                     ),
                     TextButton(
-                      onPressed: _determinePosition,
+                      onPressed: () {
+                        punching.punchInOut(latitude1!, longitude!);
+                        _isIn = true;
+                        // print("lati" + latitude1.toString());
+                        // print("lon" + longitude.toString());
+                      },
                       child: Text("Get POSITION"),
                     ),
                     SwipeableButtonView(
@@ -273,19 +310,31 @@ class _PunchingPageState extends State<PunchingPage> {
                         //   });
                         // });
                       },
-                      onFinish: () {
+                      onFinish: () async {
                         _determinePosition;
+                        print("On finish method");
 
-                        // await Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //         type: PageTransitionType.fade,
-                        //         child: DashboardScreen()));
+                          var res = {
+                            "punchIn": "555",
+                            "punchOut": "",
+                            "dateTIme": DateTime.now()
+                          };
+                          final prefs = await SharedPreferences.getInstance();
+                           await prefs.setString("punchTime", res.toString());
+                        }
+
+
                         //
-                        // //TODO: For reverse ripple effect animation
-                        // setState(() {
-                        //   isFinished = false;
-                        // });
+                        // // await Navigator.push(
+                        // //     context,
+                        // //     PageTransition(
+                        // //         type: PageTransitionType.fade,
+                        // //         child: DashboardScreen()));
+                        // //
+                        // // //TODO: For reverse ripple effect animation
+                        // // setState(() {
+                        // //   isFinished = false;
+                        // // });
                       },
                     ),
                   ],

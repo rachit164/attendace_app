@@ -5,17 +5,25 @@ import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../providers/auth_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  _getNameImage(String? name) async {
+    final prefs = await SharedPreferences.getInstance();
+    name = prefs.getString("userName");
+    print(name);
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final authProvider = Provider.of<Auth>(context, listen: false);
+    String? userName;
 
     return Scaffold(
       backgroundColor: AppColors.loginPageInputText,
@@ -78,7 +86,7 @@ class HomePage extends StatelessWidget {
                         padding: EdgeInsets.only(
                             left: width * 0.03, top: height * 0.02),
                         child: BigText(
-                          text: "Hi, Rahul Mishra",
+                          text: _getNameImage(userName).toString(),
                           size: 25,
                           color: Colors.white,
                         ),

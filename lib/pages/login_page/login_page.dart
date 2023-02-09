@@ -180,12 +180,12 @@ class _LoginPageState extends State<LoginPage> {
                       hintStyle: TextStyle(color: Colors.grey),
                       filled: true,
                       fillColor: AppColors.loginPageInputText,
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12.0)),
                         borderSide:
                             BorderSide(color: Colors.transparent, width: 2),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide:
                             BorderSide(color: AppColors.blueColor, width: 2),
@@ -205,15 +205,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       authProvider.login(emailController.text.toString(),
-                          passwordController.text.toString());
+                          passwordController.text.toString(), context);
                       print(emailController);
                       print(passwordController);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
-                      );
                     },
                     child: authProvider.loading
                         ? CircularProgressIndicator()
@@ -240,8 +234,30 @@ class Dropdown extends StatefulWidget {
 }
 
 class _Dropdown extends State<Dropdown> {
-  static List<String> list = ['One', 'Two', 'Three', 'Four'];
+  static List<Map> list = [
+    {
+      "CompanyId": 3,
+      "CompanyName": "Sprink Media Private Limited",
+      "CompanyCode": "SMPL06"
+    },
+    {
+      "CompanyId": 2,
+      "CompanyName": "VertexPlus Software Private Limited",
+      "CompanyCode": "VSPL02"
+    },
+    {
+      "CompanyId": 1,
+      "CompanyName": "VertexPlus Technologies Private Limited",
+      "CompanyCode": "VTPL03"
+    },
+    {
+      "CompanyId": 4,
+      "CompanyName": "VertexPlus Technologies Pte Ltd. (Singapore)",
+      "CompanyCode": "VTSG05"
+    }
+  ];
   String? dropdownValue;
+
   @override
   void initState() {
     super.initState();
@@ -274,17 +290,16 @@ class _Dropdown extends State<Dropdown> {
         icon: const Icon(Icons.arrow_drop_down),
         style: const TextStyle(color: AppColors.loginPageInputText),
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        onChanged: (String? value) {
-          // This is called when the user selects an item.
-          setState(() {
-            dropdownValue = value!;
-          });
-        },
-        items: list.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
+        // onChanged: (Map? value) {
+        //   setState(() {
+        //     dropdownValue = value!;
+        //   });
+        // },
+        items: list.map<DropdownMenuItem<Map>>((Map value) {
+          return DropdownMenuItem<Map>(
             value: value,
             child: Text(
-              value,
+              value['CompanyName'],
               style: const TextStyle(
                   fontSize: 16,
                   color: AppColors.blackColor,
@@ -292,6 +307,9 @@ class _Dropdown extends State<Dropdown> {
             ),
           );
         }).toList(),
+        onChanged: (Object? value) {
+          print(value!.toString());
+        },
       ),
     );
   }
