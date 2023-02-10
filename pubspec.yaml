@@ -37,6 +37,7 @@ dependencies:
   geocode: ^1.0.2
   intl: ^0.18.0
   shared_preferences: ^2.0.17
+  stop_watch_timer: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

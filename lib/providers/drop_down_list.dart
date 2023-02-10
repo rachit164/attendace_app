@@ -17,29 +17,27 @@ class DropDownProvider with ChangeNotifier {
         "content-type": "application/json",
         "accept": "application/json",
       });
-      //  print(response.body);
+      print(response.body);
 
-      // List<dynamic> list = json.decode(response.body);
-      // print(list);
-      // _dropDownList = [];
-      // _dropDownList.addAll(DropDown.fromJson(response.body).dropdown);
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        final responseData = json.decode(response.body);
+        print("response is  $responseData");
         if (responseData == null) {
           return;
         }
-        List<DropDown> _dropDownList = [];
-        responseData.forEach((key, value) {
-          _dropDownList.add(
-            DropDown(
-              companyName: value['CompanyName'],
-              companyCode: value['CompanyCode'],
-              companyId: value['CompanyId'],
-            ),
-          );
-        });
-        _dropDownItems = _dropDownList.toList();
-        print(_dropDownItems);
+
+        // List<DropDown> _dropDownList = [];
+        // responseData.forEach((key, value) {
+        //   _dropDownList.add(
+        //     DropDown(
+        //       companyName: value['CompanyName'],
+        //       companyCode: value['CompanyCode'],
+        //       companyId: value['CompanyId'],
+        //     ),
+        //   );
+        // });
+        // _dropDownItems = _dropDownList.toList();
+        // print(_dropDownItems);
 
         //  return responseData.map((data) => DropDown.fromJson(data)).toList;
 

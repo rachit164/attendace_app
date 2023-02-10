@@ -7,9 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/app_constants.dart';
 
 class PunchingProvider with ChangeNotifier {
-  Future<void> punchInOut(double lat, double long) async {
+  Future<void> punchInOut(
+      double? lat, double? long, String punchIn, String punchOut) async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
+    print("Punch In " + punchIn);
+    print("Punch out " + punchOut);
+    print("lat " + lat.toString());
+    print("long " + long.toString());
 
     final url =
         Uri.parse(AppConstants.BASE_URL + AppConstants.EMPLOYEE_PUNCHING);
@@ -24,8 +29,8 @@ class PunchingProvider with ChangeNotifier {
         },
         body: json.encode({
           "EmployeeId": 7,
-          "PunchIn": "10:15:00",
-          "PunchOut": "7:15:00",
+          "PunchIn": punchIn,
+          "PunchOut": punchOut,
           "Latitude": lat.toString(),
           "Longitude": long.toString(),
           "IsIn": true

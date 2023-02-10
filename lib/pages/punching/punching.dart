@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 import '../../providers/punching_provider.dart';
@@ -22,23 +25,41 @@ class PunchingPage extends StatefulWidget {
 class _PunchingPageState extends State<PunchingPage> {
   double? latitude1;
   double? longitude;
-  bool _isIn = false;
+  bool isFinished = false;
+  bool isIn = false;
   String inTime = "";
   String outTime = "";
   DateTime datetime = DateTime.now();
   String punchIn = "", punchOut = "";
+  Timer? _timer;
+
+  Duration duration = Duration();
+
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
+
+  void addTime() {
+    final addSeconds = 1;
+    setState(() {
+      final seconds = duration.inSeconds + addSeconds;
+      duration = Duration(seconds: seconds);
+    });
+  }
+
+  void startTimer() {
+    if (punchIn != "" && punchOut == "--/--") {
+      //time = currentTime - punchTime;
+
+      _timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+    }
+
+    // Set Millisecond.
+//    _stopWatchTimer.setPresetTime(mSec: 1234);
+    // Start timer.
+    //   _stopWatchTimer.onStartTimer();
+  }
+
   void _determinePosition() async {
     bool serviceEnabled;
-    DateTime dt = DateTime.now();
-    String hour = dt.hour.toString();
-    print(hour); //output (24 hour format): 20
-
-    String minute = dt.minute.toString();
-    print(minute);
-
-    String second = dt.second.toString();
-    print(second);
-
     LocationPermission permission;
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -80,35 +101,34 @@ class _PunchingPageState extends State<PunchingPage> {
 
   @override
   void initState() {
-    // final punchdata = Provider.of<PunchingProvider>(context, listen: false);
-    // print(punchdata);
     _determinePosition();
     // TODO: implement initState
     super.initState();
-
     setState(() {
-      punchIn = "";
-      punchOut = "";
+      punchIn = "--/--";
+      punchOut = "--/--";
     });
-
     getLastPunching();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    //  _timer?.cancel();
+    super.dispose();
   }
 
   void getLastPunching() async {
     final prefs = await SharedPreferences.getInstance();
     String? punchTimeData = prefs.getString("punchTime");
-    print("=====punchTime====");
-    print(punchTimeData);
-    print("=====punchTime====");
     if (punchTimeData != null) {
-      final body = json.decode(punchTimeData);
-      print("=====body====");
-      print(body);
-      print("=====body====");
+      final body = json.decode(prefs.getString("punchTime") as String);
+      setState(() {
+        punchIn = body['punchIn'];
+        punchOut = body['punchOut'];
+      });
     }
   }
-
-  //get latitude and departure
 
   @override
   Widget build(
@@ -118,8 +138,13 @@ class _PunchingPageState extends State<PunchingPage> {
     final punching = Provider.of<PunchingProvider>(context, listen: false);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    //  DateTime datetime = DateTime.now();
-    // String formattedDate = DateFormat('kk:mm a').format(datetime);
+    DateTime datetime = DateTime.now();
+    String formattedDate = DateFormat('hh:mm a').format(datetime);
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    final hours = twoDigits(duration.inHours.remainder(60));
+
     return Scaffold(
       body: Stack(
         children: [
@@ -134,6 +159,23 @@ class _PunchingPageState extends State<PunchingPage> {
                   fit: BoxFit.cover,
                   image: AssetImage("assets/images/map.png"),
                 ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 50,
+            left: 5,
+            right: 0,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
           ),
@@ -188,7 +230,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               height: height * 0.005,
                             ),
                             TextLight(
-                              text: "==",
+                              text: punchIn,
                               color: AppColors.iconColors,
                               size: height * 0.023,
                             )
@@ -205,7 +247,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               height: height * 0.005,
                             ),
                             TextLight(
-                              text: "===",
+                              text: punchOut,
                               color: AppColors.iconColors,
                               size: height * 0.023,
                             ),
@@ -232,7 +274,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               bottomLeft: Radius.circular(5),
                             ),
                           ),
-                          child: BigText(text: "05"),
+                          child: BigText(text: hours),
                         ),
                         SizedBox(
                           width: width * 0.015,
@@ -254,7 +296,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               bottomLeft: Radius.circular(5),
                             ),
                           ),
-                          child: BigText(text: "05"),
+                          child: BigText(text: minutes),
                         ),
                         SizedBox(
                           width: width * 0.015,
@@ -276,66 +318,95 @@ class _PunchingPageState extends State<PunchingPage> {
                               bottomLeft: Radius.circular(5),
                             ),
                           ),
-                          child: BigText(text: "12"),
+                          child: BigText(text: seconds),
                         ),
                       ],
                     ),
                     SizedBox(
                       height: height * 0.03,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        punching.punchInOut(latitude1!, longitude!);
-                        _isIn = true;
-                        // print("lati" + latitude1.toString());
-                        // print("lon" + longitude.toString());
-                      },
-                      child: Text("Get POSITION"),
-                    ),
-                    SwipeableButtonView(
-                      buttonText: 'Swipe to Punch Out',
-                      buttonWidget: Container(
-                        child: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Colors.grey,
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        child: SwipeableButtonView(
+                          buttonText: punchIn.isEmpty
+                              ? "Swipe to punch in"
+                              : "Swipe to punch out",
+                          buttontextstyle: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 17,
+                              color: Colors.white),
+                          buttonWidget: Container(
+                            child: Container(
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          activeColor: punchIn.isEmpty
+                              ? AppColors.blueColor
+                              : AppColors.greyColor,
+                          isFinished: isFinished,
+                          onWaitingProcess: () {
+                            Future.delayed(Duration(seconds: 2), () {
+                              setState(() {
+                                isFinished = true;
+                              });
+                            });
+                          },
+                          onFinish: () async {
+                            print("========");
+                            print(datetime);
+
+                            print("========");
+
+                            if (punchIn == '--/--') {
+                              var res = {
+                                "punchIn": formattedDate,
+                                "punchOut": "--/--",
+                                "dateTIme": DateTime.now().toString(),
+                              };
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString(
+                                  "punchTime", json.encode(res));
+                            } else {
+                              var res = {
+                                "punchIn": punchIn,
+                                "punchOut": formattedDate,
+                                "dateTIme": DateTime.now().toString()
+                              };
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString(
+                                  "punchTime", json.encode(res));
+                            }
+                            if (punchIn == '--/--') {
+                              punching.punchInOut(latitude1, longitude,
+                                  formattedDate, punchOut);
+                              setState(() {
+                                isIn = true;
+                              });
+                            } else {
+                              punching.punchInOut(
+                                  latitude1, longitude, punchIn, formattedDate);
+                            }
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PunchingPage()));
+
+                            // //
+                            // // //TODO: For reverse ripple effect animation
+                            setState(() {
+                              isFinished = false;
+                            });
+                          },
                         ),
                       ),
-                      activeColor: AppColors.blueColor,
-                      isFinished: true,
-                      onWaitingProcess: () {
-                        _determinePosition;
-                        // Future.delayed(Duration(seconds: 2), () {
-                        //   setState(() {
-                        //     isFinished = true;
-                        //   });
-                        // });
-                      },
-                      onFinish: () async {
-                        _determinePosition;
-                        print("On finish method");
-
-                          var res = {
-                            "punchIn": "555",
-                            "punchOut": "",
-                            "dateTIme": DateTime.now()
-                          };
-                          final prefs = await SharedPreferences.getInstance();
-                           await prefs.setString("punchTime", res.toString());
-                        }
-
-
-                        //
-                        // // await Navigator.push(
-                        // //     context,
-                        // //     PageTransition(
-                        // //         type: PageTransitionType.fade,
-                        // //         child: DashboardScreen()));
-                        // //
-                        // // //TODO: For reverse ripple effect animation
-                        // // setState(() {
-                        // //   isFinished = false;
-                        // // });
-                      },
                     ),
                   ],
                 ),

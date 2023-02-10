@@ -12,12 +12,6 @@ import '../../providers/auth_provider.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  _getNameImage(String? name) async {
-    final prefs = await SharedPreferences.getInstance();
-    name = prefs.getString("userName");
-    print(name);
-  }
-
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -86,7 +80,7 @@ class HomePage extends StatelessWidget {
                         padding: EdgeInsets.only(
                             left: width * 0.03, top: height * 0.02),
                         child: BigText(
-                          text: _getNameImage(userName).toString(),
+                          text: "Hi, Rahyl Mishra",
                           size: 25,
                           color: Colors.white,
                         ),

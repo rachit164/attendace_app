@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     FocusNode(),
   ];
   final GlobalKey<FormState> _formKey = GlobalKey();
+
   void initState() {
     _passwordVisible = false;
     _focusNodes.forEach((node) {
@@ -29,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     });
     var dropDownData =
         Provider.of<DropDownProvider>(context, listen: false).dropDown();
+    print(dropDownData);
     super.initState();
   }
 
@@ -282,7 +284,7 @@ class _Dropdown extends State<Dropdown> {
           ),
         ),
         hint: const Text(
-          'Please select a Company',
+          'Please select company',
           style: TextStyle(
               fontSize: 16, fontFamily: 'Inter', color: AppColors.greyColor),
         ),
