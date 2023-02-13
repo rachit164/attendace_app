@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
                         padding: EdgeInsets.only(
                             left: width * 0.03, top: height * 0.02),
                         child: BigText(
-                          text: "Hi, Rahyl Mishra",
+                          text: authProvider.userName.toString(),
                           size: 25,
                           color: Colors.white,
                         ),

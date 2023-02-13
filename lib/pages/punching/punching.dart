@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -43,19 +42,6 @@ class _PunchingPageState extends State<PunchingPage> {
       final seconds = duration.inSeconds + addSeconds;
       duration = Duration(seconds: seconds);
     });
-  }
-
-  void startTimer() {
-    if (punchIn != "" && punchOut == "--/--") {
-      //time = currentTime - punchTime;
-
-      _timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
-    }
-
-    // Set Millisecond.
-//    _stopWatchTimer.setPresetTime(mSec: 1234);
-    // Start timer.
-    //   _stopWatchTimer.onStartTimer();
   }
 
   void _determinePosition() async {
@@ -105,11 +91,10 @@ class _PunchingPageState extends State<PunchingPage> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      punchIn = "--/--";
-      punchOut = "--/--";
+      punchIn = "";
+      punchOut = "";
     });
     getLastPunching();
-    startTimer();
   }
 
   @override
@@ -126,8 +111,26 @@ class _PunchingPageState extends State<PunchingPage> {
       setState(() {
         punchIn = body['punchIn'];
         punchOut = body['punchOut'];
+        startTimer();
       });
     }
+  }
+
+  void startTimer() {
+    print("===========================");
+    print("punchIn" + punchIn);
+    print("===========================");
+    if (punchIn != "" && punchOut == '') {
+      print("punch in timer start" + punchIn);
+      //time = currentTime - punchTime;
+
+      _timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+    }
+
+    // Set Millisecond.
+//    _stopWatchTimer.setPresetTime(mSec: 1234);
+    // Start timer.
+    //   _stopWatchTimer.onStartTimer();
   }
 
   @override
@@ -205,7 +208,7 @@ class _PunchingPageState extends State<PunchingPage> {
                       size: height * 0.033,
                     ),
                     SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.010,
                     ),
                     TextLight(
                       text:
@@ -214,7 +217,7 @@ class _PunchingPageState extends State<PunchingPage> {
                       color: AppColors.iconColors,
                     ),
                     SizedBox(
-                      height: height * 0.015,
+                      height: height * 0.025,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,7 +233,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               height: height * 0.005,
                             ),
                             TextLight(
-                              text: punchIn,
+                              text: punchIn.isEmpty ? "--/--" : punchIn,
                               color: AppColors.iconColors,
                               size: height * 0.023,
                             )
@@ -247,7 +250,7 @@ class _PunchingPageState extends State<PunchingPage> {
                               height: height * 0.005,
                             ),
                             TextLight(
-                              text: punchOut,
+                              text: punchOut.isEmpty ? "--/--" : punchOut,
                               color: AppColors.iconColors,
                               size: height * 0.023,
                             ),
@@ -287,7 +290,7 @@ class _PunchingPageState extends State<PunchingPage> {
                           alignment: Alignment.center,
                           height: 50,
                           width: 50,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.loginPageInputText,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(5),
@@ -309,7 +312,7 @@ class _PunchingPageState extends State<PunchingPage> {
                           alignment: Alignment.center,
                           height: 50,
                           width: 50,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.loginPageInputText,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(5),
@@ -332,13 +335,14 @@ class _PunchingPageState extends State<PunchingPage> {
                           buttonText: punchIn.isEmpty
                               ? "Swipe to punch in"
                               : "Swipe to punch out",
-                          buttontextstyle: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 17,
-                              color: Colors.white),
+                          buttontextstyle: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 17,
+                            color: Colors.white,
+                          ),
                           buttonWidget: Container(
                             child: Container(
-                              child: Icon(
+                              child: const Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: Colors.grey,
                               ),
@@ -346,25 +350,22 @@ class _PunchingPageState extends State<PunchingPage> {
                           ),
                           activeColor: punchIn.isEmpty
                               ? AppColors.blueColor
-                              : AppColors.greyColor,
+                              : AppColors.greenColor,
                           isFinished: isFinished,
                           onWaitingProcess: () {
-                            Future.delayed(Duration(seconds: 2), () {
+                            Future.delayed(const Duration(seconds: 2), () {
                               setState(() {
                                 isFinished = true;
                               });
                             });
                           },
+                          isActive: punchOut.isNotEmpty ? false : true,
+                          disableColor: AppColors.redColor,
                           onFinish: () async {
-                            print("========");
-                            print(datetime);
-
-                            print("========");
-
-                            if (punchIn == '--/--') {
+                            if (punchIn == '') {
                               var res = {
                                 "punchIn": formattedDate,
-                                "punchOut": "--/--",
+                                "punchOut": "",
                                 "dateTIme": DateTime.now().toString(),
                               };
                               final prefs =
@@ -382,28 +383,28 @@ class _PunchingPageState extends State<PunchingPage> {
                               await prefs.setString(
                                   "punchTime", json.encode(res));
                             }
-                            if (punchIn == '--/--') {
+                            if (punchIn == '') {
                               punching.punchInOut(latitude1, longitude,
-                                  formattedDate, punchOut);
+                                  formattedDate, punchOut, context);
                               setState(() {
                                 isIn = true;
                               });
                             } else {
-                              punching.punchInOut(
-                                  latitude1, longitude, punchIn, formattedDate);
+                              punching.punchInOut(latitude1, longitude, punchIn,
+                                  formattedDate, context);
                             }
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PunchingPage()));
 
                             // //
                             // // //TODO: For reverse ripple effect animation
                             setState(() {
                               isFinished = false;
                             });
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PunchingPage(),
+                              ),
+                            );
                           },
                         ),
                       ),

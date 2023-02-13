@@ -2,13 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../pages/punching/punching.dart';
 import '../utils/app_constants.dart';
 
 class PunchingProvider with ChangeNotifier {
-  Future<void> punchInOut(
-      double? lat, double? long, String punchIn, String punchOut) async {
+  Future<void> punchInOut(double? lat, double? long, String punchIn,
+      String punchOut, BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
     print("Punch In " + punchIn);
@@ -35,11 +37,12 @@ class PunchingProvider with ChangeNotifier {
           "Longitude": long.toString(),
           "IsIn": true
         }));
-    print("response is" + response.body);
+
     final responseData = json.decode(response.body);
-    print(responseData);
+
     if (responseData['Success'] == true) {
-      print("success");
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const PunchingPage()));
     } else {
       print("failed");
     }

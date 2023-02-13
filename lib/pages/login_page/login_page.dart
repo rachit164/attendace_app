@@ -206,10 +206,23 @@ class _LoginPageState extends State<LoginPage> {
                       minimumSize: const Size.fromHeight(50), // NEW
                     ),
                     onPressed: () {
-                      authProvider.login(emailController.text.toString(),
-                          passwordController.text.toString(), context);
-                      print(emailController);
-                      print(passwordController);
+                      if (emailController.text.isEmpty ||
+                          !emailController.text.contains('@')) {
+                        const snackBar = SnackBar(
+                          content: Text('invalid Email'),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else if (passwordController.text.isEmpty) {
+                        const snackBar = SnackBar(
+                          content: Text('Please Enter password'),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        authProvider.login(emailController.text.toString(),
+                            passwordController.text.toString(), context);
+                      }
                     },
                     child: authProvider.loading
                         ? CircularProgressIndicator()
@@ -236,7 +249,13 @@ class Dropdown extends StatefulWidget {
 }
 
 class _Dropdown extends State<Dropdown> {
-  static List<Map> list = [
+  @override
+  void initState() {
+    //var dropDownData = Provider.of<DropDownProvider>(context,listen: false);
+    super.initState();
+  }
+
+  List<Map> list = [
     {
       "CompanyId": 3,
       "CompanyName": "Sprink Media Private Limited",
@@ -259,11 +278,6 @@ class _Dropdown extends State<Dropdown> {
     }
   ];
   String? dropdownValue;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
