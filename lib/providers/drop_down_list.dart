@@ -17,7 +17,7 @@ class DropDownProvider with ChangeNotifier {
         "content-type": "application/json",
         "accept": "application/json",
       });
-      print(response.body);
+      var data = response.body;
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);

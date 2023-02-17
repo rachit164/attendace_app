@@ -6,6 +6,8 @@ import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/drop_down.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -36,21 +38,6 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  String? get _errorText {
-    // at any time, we can get the text from _controller.value.text
-    final text = emailController.value.text;
-    // Note: you can do your own custom validation here
-    // Move this logic this outside the widget for more testable code
-    if (text.isEmpty) {
-      return 'Can\'t be empty';
-    }
-    if (!text.contains('@')) {
-      return 'Invalid Email';
-    }
-    // return null if the text is valid
-    return null;
-  }
 
   void validateAndSave() {
     final FormState? form = _formKey.currentState;
@@ -101,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: height * 0.06,
                 ),
-                Dropdown(),
+                const Dropdown(),
                 SizedBox(
                   height: height * 0.005,
                 ),
@@ -209,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (emailController.text.isEmpty ||
                           !emailController.text.contains('@')) {
                         const snackBar = SnackBar(
-                          content: Text('invalid Email'),
+                          content: Text('Email is not valid'),
                         );
 
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -225,8 +212,8 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     child: authProvider.loading
-                        ? CircularProgressIndicator()
-                        : Text(
+                        ? const CircularProgressIndicator()
+                        : const Text(
                             'Sign In',
                             style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
                           ),
@@ -236,96 +223,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class Dropdown extends StatefulWidget {
-  const Dropdown({super.key});
-
-  @override
-  State<Dropdown> createState() => _Dropdown();
-}
-
-class _Dropdown extends State<Dropdown> {
-  @override
-  void initState() {
-    //var dropDownData = Provider.of<DropDownProvider>(context,listen: false);
-    super.initState();
-  }
-
-  List<Map> list = [
-    {
-      "CompanyId": 3,
-      "CompanyName": "Sprink Media Private Limited",
-      "CompanyCode": "SMPL06"
-    },
-    {
-      "CompanyId": 2,
-      "CompanyName": "VertexPlus Software Private Limited",
-      "CompanyCode": "VSPL02"
-    },
-    {
-      "CompanyId": 1,
-      "CompanyName": "VertexPlus Technologies Private Limited",
-      "CompanyCode": "VTPL03"
-    },
-    {
-      "CompanyId": 4,
-      "CompanyName": "VertexPlus Technologies Pte Ltd. (Singapore)",
-      "CompanyCode": "VTSG05"
-    }
-  ];
-  String? dropdownValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: AppColors.loginPageInputText,
-          borderRadius: BorderRadius.circular(8)),
-      width: double.infinity,
-      padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
-      child: DropdownButtonFormField(
-        value: dropdownValue,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.person, color: AppColors.greyColor),
-          enabledBorder: UnderlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(color: Colors.transparent),
-          ),
-        ),
-        hint: const Text(
-          'Please select company',
-          style: TextStyle(
-              fontSize: 16, fontFamily: 'Inter', color: AppColors.greyColor),
-        ),
-        isExpanded: true,
-        icon: const Icon(Icons.arrow_drop_down),
-        style: const TextStyle(color: AppColors.loginPageInputText),
-        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        // onChanged: (Map? value) {
-        //   setState(() {
-        //     dropdownValue = value!;
-        //   });
-        // },
-        items: list.map<DropdownMenuItem<Map>>((Map value) {
-          return DropdownMenuItem<Map>(
-            value: value,
-            child: Text(
-              value['CompanyName'],
-              style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.blackColor,
-                  fontFamily: 'Inter'),
-            ),
-          );
-        }).toList(),
-        onChanged: (Object? value) {
-          print(value!.toString());
-        },
       ),
     );
   }

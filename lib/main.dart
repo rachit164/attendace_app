@@ -2,6 +2,7 @@ import 'package:attendance_app/pages/home_page/home_page.dart';
 
 import 'package:attendance_app/pages/my_attendance/my_attendance.dart';
 import 'package:attendance_app/pages/punching/punching.dart';
+import 'package:attendance_app/pages/splash_screen/splash_screen.dart';
 import 'package:attendance_app/providers/auth_provider.dart';
 import 'package:attendance_app/providers/drop_down_list.dart';
 import 'package:attendance_app/providers/punching_provider.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
                 ),
           ),
           routes: {
-            "/": (context) => const HomePage(),
+            "/": (context) => const SplashScreen(),
             MyRoutes.homepage: (context) => const HomePage(),
             MyRoutes.myAttendance: (context) => const MyAttendance(),
             MyRoutes.punching: (context) => const PunchingPage(),

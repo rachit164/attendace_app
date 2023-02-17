@@ -97,12 +97,6 @@ class _PunchingPageState extends State<PunchingPage> {
     getLastPunching();
   }
 
-  @override
-  void dispose() {
-    //  _timer?.cancel();
-    super.dispose();
-  }
-
   void getLastPunching() async {
     final prefs = await SharedPreferences.getInstance();
     String? punchTimeData = prefs.getString("punchTime");
@@ -114,6 +108,12 @@ class _PunchingPageState extends State<PunchingPage> {
         startTimer();
       });
     }
+  }
+
+  @override
+  void dispose() {
+    //  _timer?.cancel();
+    super.dispose();
   }
 
   void startTimer() {

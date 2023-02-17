@@ -5,8 +5,6 @@ import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../providers/auth_provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +15,6 @@ class HomePage extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final authProvider = Provider.of<Auth>(context, listen: false);
-    String? userName;
 
     return Scaffold(
       backgroundColor: AppColors.loginPageInputText,
@@ -29,7 +26,7 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   height: height * 0.35,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.blueColor,
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(45),
@@ -46,12 +43,13 @@ class HomePage extends StatelessWidget {
                             right: width * 0.03),
                         child: Row(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 30,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 backgroundImage: NetworkImage(
-                                    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                                  authProvider.userImage,
+                                ),
                                 radius: 28,
                               ),
                             ),

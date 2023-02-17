@@ -335,7 +335,9 @@ class _MyAttendanceState extends State<MyAttendance> {
                           Container(
                             width: width * 0.5,
                             margin: EdgeInsets.only(
-                                left: width * 0.02, right: width * 0.02),
+                              left: width * 0.02,
+                              right: width * 0.02,
+                            ),
                             child: Column(
                               children: [
                                 Row(
