@@ -3,11 +3,13 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:attendance_app/utils/app_constants.dart';
+import 'package:attendance_app/utils/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../pages/home_page/home_page.dart';
+import '../utils/alert_message.dart';
+import '../view/home_page/home_page.dart';
 
 class Auth with ChangeNotifier {
   bool _loading = false;
@@ -17,6 +19,7 @@ class Auth with ChangeNotifier {
   var userImage;
   String? userName;
   String? message;
+  AlertMessages alert = AlertMessages();
 
   setLoading(bool value) {
     _loading = value;
@@ -26,7 +29,6 @@ class Auth with ChangeNotifier {
   Future<void> login(
       String email, String password, BuildContext context) async {
     setLoading(true);
-
     try {
       final url = Uri.parse(AppConstants.BASE_URL + AppConstants.LOGIN);
       final response = await http.post(url,
@@ -45,49 +47,28 @@ class Auth with ChangeNotifier {
             "Password": password,
             "GrantType": "password",
             "Reason": "Dummy Login Reason"
-            // 'EmailId': 'admin@vertexplus.com',
-            // 'Password': 'password123',
           }));
       // print(response.body);
       final responseData = json.decode(response.body);
 
-      if (responseData['Success'] == true) {
-        //  print("Successful");
-        setLoading(true);
-        var snackBar = SnackBar(
-          content: Text(message!),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
-        setLoading(false);
-      } else {
-        setLoading(true);
-        var snackBar = SnackBar(
-          content: Text(message!),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        setLoading(false);
-      }
       result = responseData['Result'];
       token = result['Token'];
       var transactionMessage = result['TransactionMessage'];
       message = transactionMessage['Message'];
       userName = result['UserName'];
       userImage = result['EmaployeeImagePath'];
+
+      if (responseData['Success'] == true) {
+        Navigator.pushNamed(context, RoutesName.punching);
+        alert.showError(context, message!);
+        //  setLoading(true);
+      } else {
+        setLoading(false);
+        alert.showError(context, message!);
+      }
     } on SocketException catch (e) {
       setLoading(false);
-      const snackBar = SnackBar(
-        content: Text('No Internet Connection'),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    } catch (e) {
-      var snackBar = SnackBar(
-        content: Text(message!),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      setLoading(false);
+      alert.showError(context, "No internet Connection");
     }
 
     final prefs = await SharedPreferences.getInstance();

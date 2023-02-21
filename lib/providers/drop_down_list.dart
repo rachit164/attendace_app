@@ -21,7 +21,6 @@ class DropDownProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        print("response is  $responseData");
         if (responseData == null) {
           return;
         }

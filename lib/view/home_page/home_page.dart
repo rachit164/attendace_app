@@ -1,6 +1,8 @@
-import 'package:attendance_app/pages/my_attendance/my_attendance.dart';
-import 'package:attendance_app/pages/punching/punching.dart';
+import 'package:attendance_app/view/my_attendance/my_attendance.dart';
+import 'package:attendance_app/view/punching/punching.dart';
 import 'package:attendance_app/utils/colors.dart';
+import 'package:attendance_app/utils/routes/routes.dart';
+import 'package:attendance_app/utils/routes/routes_name.dart';
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 import 'package:flutter/material.dart';
@@ -47,13 +49,15 @@ class HomePage extends StatelessWidget {
                               radius: 30,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  authProvider.userImage,
+                                child: Image.asset(
+                                  "assets/images/bell_icon@3x.png",
+                                  width: width * 0.07,
+                                  height: height * 0.07,
                                 ),
                                 radius: 28,
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Container(
                               child: Image.asset(
                                 "assets/images/bell_icon@3x.png",
@@ -108,15 +112,12 @@ class HomePage extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyAttendance()));
+                          Navigator.pushNamed(context, RoutesName.myAttendance);
                         },
                         child: Container(
                           height: width * 0.43,
                           width: width * 0.43,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
@@ -214,7 +215,7 @@ class HomePage extends StatelessWidget {
                       Container(
                         height: width * 0.43,
                         width: width * 0.43,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
@@ -249,7 +250,7 @@ class HomePage extends StatelessWidget {
                       Container(
                         height: width * 0.43,
                         width: width * 0.43,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
@@ -268,13 +269,13 @@ class HomePage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Container(
                         height: width * 0.43,
                         width: width * 0.43,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
@@ -314,7 +315,7 @@ class HomePage extends StatelessWidget {
                   ),
                   height: height * 0.08,
                   width: width - 95,
-                  child: TextField(
+                  child: const TextField(
                     style: TextStyle(fontFamily: 'Inter', fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,

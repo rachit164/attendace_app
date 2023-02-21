@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 import '../../providers/punching_provider.dart';
@@ -33,8 +32,6 @@ class _PunchingPageState extends State<PunchingPage> {
   Timer? _timer;
 
   Duration duration = Duration();
-
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
 
   void addTime() {
     final addSeconds = 1;

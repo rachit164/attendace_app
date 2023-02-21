@@ -1,7 +1,11 @@
-import 'package:attendance_app/pages/home_page/home_page.dart';
+import 'dart:convert';
+
+import 'package:attendance_app/view/home_page/home_page.dart';
 import 'package:attendance_app/providers/auth_provider.dart';
 import 'package:attendance_app/providers/drop_down_list.dart';
 import 'package:attendance_app/utils/colors.dart';
+import 'package:attendance_app/utils/alert_message.dart';
+import 'package:attendance_app/view_model/auth_view_model.dart';
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   ];
   final GlobalKey<FormState> _formKey = GlobalKey();
 
+  @override
   void initState() {
     _passwordVisible = false;
     _focusNodes.forEach((node) {
@@ -39,21 +44,16 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void validateAndSave() {
-    final FormState? form = _formKey.currentState;
-    if (form!.validate()) {
-      print('Form is valid');
-    } else {
-      print('Form is invalid');
-    }
-  }
+  FocusNode emailFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<Auth>(context, listen: false);
+    final authViewModel = Provider.of<AuthViewModel>(context);
 
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    AlertMessages alert = AlertMessages();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -96,12 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
                     controller: emailController,
-                    validator: (value) {
-                      if (value!.isEmpty || !value.contains('@')) {
-                        return 'Invalid email!';
-                      }
-                      return null;
-                    },
+                    focusNode: emailFocusNode,
                     style: const TextStyle(fontFamily: 'Inter', fontSize: 16),
                     decoration: const InputDecoration(
                       hintText: 'Email',
@@ -123,6 +118,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     keyboardType: TextInputType.emailAddress,
+                    onFieldSubmitted: (valu) {
+                      FocusScope.of(context).requestFocus(_focusNodes[0]);
+                    },
                   ),
                 ),
                 SizedBox(
@@ -145,10 +143,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () {},
                       ),
-
-                      // _focusNodes[0].hasFocus
-                      //     ? Image.asset("assets/images/password_active_icon.png")
-                      //     : Image.asset("assets/images/password_icon.png"),
                       suffixIcon: IconButton(
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
@@ -158,7 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                           color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
-                          // Update the state i.e. toogle the state of passwordVisible variable
                           _focusNodes[0].hasFocus
                               ? setState(() {
                                   _passwordVisible = !_passwordVisible;
@@ -166,11 +159,13 @@ class _LoginPageState extends State<LoginPage> {
                               : null;
                         },
                       ),
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                       filled: true,
                       fillColor: AppColors.loginPageInputText,
                       enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12.0),
+                        ),
                         borderSide:
                             BorderSide(color: Colors.transparent, width: 2),
                       ),
@@ -195,28 +190,37 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (emailController.text.isEmpty ||
                           !emailController.text.contains('@')) {
-                        const snackBar = SnackBar(
-                          content: Text('Email is not valid'),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        alert.showError(context, 'Email is not valid ');
                       } else if (passwordController.text.isEmpty) {
-                        const snackBar = SnackBar(
-                          content: Text('Please Enter password'),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        alert.showError(context, 'Please enter password');
                       } else {
-                        authProvider.login(emailController.text.toString(),
-                            passwordController.text.toString(), context);
+                        // authProvider.login(emailController.text.toString(),
+                        //     passwordController.text.toString(), context);
+                        var data = json.encode({
+                          "Company": {
+                            "CompanyId": 1,
+                            "CompanyName":
+                                "VertexPlus Technologies Private Limited",
+                            "CompanyCode": "VTPL03"
+                          },
+                          "EmailId": emailController.text.toString(),
+                          "Password": passwordController.text.toString(),
+                          "GrantType": "password",
+                          "Reason": "Dummy Login Reason"
+                        });
+                        authViewModel.loginApi(data, context);
+                        print("api hit");
                       }
                     },
-                    child: authProvider.loading
-                        ? const CircularProgressIndicator()
-                        : const Text(
-                            'Sign In',
-                            style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
-                          ),
+                    child:
+                        //authProvider.loading
+                        authViewModel.loading
+                            ? const CircularProgressIndicator()
+                            : const Text(
+                                'Sign In',
+                                style: TextStyle(
+                                    fontSize: 18, fontFamily: 'Inter'),
+                              ),
                   ),
                 ),
               ],

@@ -1,8 +1,6 @@
 import 'dart:async';
-
-import 'package:attendance_app/pages/login_page/login_page.dart';
+import 'package:attendance_app/view/login_page/login_page.dart';
 import 'package:attendance_app/utils/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
