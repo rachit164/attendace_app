@@ -203,8 +203,8 @@ class _LoginPageState extends State<LoginPage> {
                                 "VertexPlus Technologies Private Limited",
                             "CompanyCode": "VTPL03"
                           },
-                          "EmailId": emailController.text.toString(),
-                          "Password": passwordController.text.toString(),
+                          "EmailId": "admin@vertexplus.com",
+                          "Password": "password123",
                           "GrantType": "password",
                           "Reason": "Dummy Login Reason"
                         });

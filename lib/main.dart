@@ -1,4 +1,5 @@
 import 'package:attendance_app/view/home_page/home_page.dart';
+import 'package:attendance_app/view/login_page/user_view_model.dart';
 
 import 'package:attendance_app/view/my_attendance/my_attendance.dart';
 import 'package:attendance_app/view/punching/punching.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
 
         //MVVM codes
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(
