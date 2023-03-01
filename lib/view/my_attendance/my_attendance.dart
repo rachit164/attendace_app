@@ -36,7 +36,7 @@ class _MyAttendanceState extends State<MyAttendance> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: AppColors.loginPageInputText,
+      backgroundColor: AppColors.offwhite,
       body: Column(
         children: [
           Container(
@@ -97,205 +97,12 @@ class _MyAttendanceState extends State<MyAttendance> {
               ],
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
               height: height * 0.62,
               width: width,
-              // child: Column(
-              //   children: [
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Container(
-              //         alignment: Alignment.center,
-              //         height: 55,
-              //         width: 55,
-              //         decoration: BoxDecoration(
-              //           color: Colors.white,
-              //           borderRadius: BorderRadius.only(
-              //             topRight: Radius.circular(5),
-              //             topLeft: Radius.circular(5),
-              //             bottomRight: Radius.circular(5),
-              //             bottomLeft: Radius.circular(5),
-              //           ),
-              //         ),
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             TextLight(
-              //               text: "SUN",
-              //               size: 16,
-              //               color: AppColors.greyColor,
-              //             ),
-              //             BigText(
-              //               text: "08",
-              //               size: 18,
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //       Container(
-              //         width: width * 0.5,
-              //         margin: EdgeInsets.only(
-              //             left: width * 0.02, right: width * 0.02),
-              //         child: Column(
-              //           children: [
-              //             TextLight(
-              //               text: "Holiday",
-              //               color: AppColors.redColor,
-              //               size: height * 0.022,
-              //             ),
-              //             Container(
-              //               height: height * 0.005,
-              //               color: AppColors.redColor,
-              //               width: width * 0.5,
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 TextLight(text: "--:--"),
-              //                 TextLight(text: "--:--"),
-              //               ],
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //       Container(
-              //         alignment: Alignment.center,
-              //         height: 55,
-              //         width: 65,
-              //         decoration: BoxDecoration(
-              //           color: Colors.white,
-              //           borderRadius: BorderRadius.only(
-              //             topRight: Radius.circular(5),
-              //             topLeft: Radius.circular(5),
-              //             bottomRight: Radius.circular(5),
-              //             bottomLeft: Radius.circular(5),
-              //           ),
-              //         ),
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             TextLight(
-              //               text: "Hrs",
-              //               size: 16,
-              //               color: AppColors.greyColor,
-              //             ),
-              //             BigText(
-              //               text: "00:00",
-              //               size: 18,
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Container(
-              //         alignment: Alignment.center,
-              //         height: 55,
-              //         width: 55,
-              //         decoration: BoxDecoration(
-              //           color: Colors.white,
-              //           borderRadius: BorderRadius.only(
-              //             topRight: Radius.circular(5),
-              //             topLeft: Radius.circular(5),
-              //             bottomRight: Radius.circular(5),
-              //             bottomLeft: Radius.circular(5),
-              //           ),
-              //         ),
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             TextLight(
-              //               text: "MON",
-              //               size: 16,
-              //               color: AppColors.greyColor,
-              //             ),
-              //             BigText(
-              //               text: "09",
-              //               size: 18,
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //       Container(
-              //         width: width * 0.5,
-              //         margin: EdgeInsets.only(
-              //             left: width * 0.02, right: width * 0.02),
-              //         child: Column(
-              //           children: [
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 TextLight(
-              //                   text: "Punch In",
-              //                   size: height * 0.02,
-              //                 ),
-              //                 TextLight(
-              //                   text: "Punch Out",
-              //                   size: height * 0.02,
-              //                 ),
-              //               ],
-              //             ),
-              //             Container(
-              //               height: height * 0.005,
-              //               color: AppColors.blueColor,
-              //               width: width * 0.5,
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 TextLight(
-              //                   text: "10:00",
-              //                   size: height * 0.02,
-              //                 ),
-              //                 TextLight(
-              //                   text: "07:00",
-              //                   size: height * 0.02,
-              //                 ),
-              //               ],
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //       Container(
-              //         alignment: Alignment.center,
-              //         height: 55,
-              //         width: 65,
-              //         decoration: BoxDecoration(
-              //           color: Colors.white,
-              //           borderRadius: BorderRadius.only(
-              //             topRight: Radius.circular(5),
-              //             topLeft: Radius.circular(5),
-              //             bottomRight: Radius.circular(5),
-              //             bottomLeft: Radius.circular(5),
-              //           ),
-              //         ),
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             TextLight(
-              //               text: "Hrs",
-              //               size: 16,
-              //               color: AppColors.greyColor,
-              //             ),
-              //             BigText(
-              //               text: "09:00",
-              //               size: 18,
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               child: ListView.builder(
                   itemCount: _items.length,
                   itemBuilder: (context, index) {
@@ -308,7 +115,7 @@ class _MyAttendanceState extends State<MyAttendance> {
                             alignment: Alignment.center,
                             height: 55,
                             width: 55,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(5),
@@ -386,7 +193,7 @@ class _MyAttendanceState extends State<MyAttendance> {
                             alignment: Alignment.center,
                             height: 55,
                             width: 65,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(5),

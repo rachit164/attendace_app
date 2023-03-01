@@ -49,8 +49,7 @@ class _Dropdown extends State<Dropdown> {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: AppColors.loginPageInputText,
-          borderRadius: BorderRadius.circular(8)),
+          color: AppColors.offwhite, borderRadius: BorderRadius.circular(8)),
       width: double.infinity,
       padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
       child: DropdownButtonFormField(
@@ -65,11 +64,14 @@ class _Dropdown extends State<Dropdown> {
         hint: const Text(
           'Please select company',
           style: TextStyle(
-              fontSize: 16, fontFamily: 'Inter', color: AppColors.greyColor),
+            fontSize: 16,
+            fontFamily: 'Inter',
+            color: AppColors.greyColor,
+          ),
         ),
         isExpanded: true,
         icon: const Icon(Icons.arrow_drop_down),
-        style: const TextStyle(color: AppColors.loginPageInputText),
+        style: const TextStyle(color: AppColors.offwhite),
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         // onChanged: (Map? value) {
         //   setState(() {

@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       hintStyle: TextStyle(color: Colors.grey),
                       filled: true,
-                      fillColor: AppColors.loginPageInputText,
+                      fillColor: AppColors.offwhite,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12.0)),
                         borderSide:
@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       hintStyle: const TextStyle(color: Colors.grey),
                       filled: true,
-                      fillColor: AppColors.loginPageInputText,
+                      fillColor: AppColors.offwhite,
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(12.0),
@@ -194,22 +194,22 @@ class _LoginPageState extends State<LoginPage> {
                       } else if (passwordController.text.isEmpty) {
                         alert.showError(context, 'Please enter password');
                       } else {
-                        // authProvider.login(emailController.text.toString(),
-                        //     passwordController.text.toString(), context);
-                        var data = json.encode({
-                          "Company": {
-                            "CompanyId": 1,
-                            "CompanyName":
-                                "VertexPlus Technologies Private Limited",
-                            "CompanyCode": "VTPL03"
-                          },
-                          "EmailId": "admin@vertexplus.com",
-                          "Password": "password123",
-                          "GrantType": "password",
-                          "Reason": "Dummy Login Reason"
-                        });
-                        authViewModel.loginApi(data, context);
-                        print("api hit");
+                        authProvider.login(emailController.text.toString(),
+                            passwordController.text.toString(), context);
+                        // var data = json.encode({
+                        //   "Company": {
+                        //     "CompanyId": 1,
+                        //     "CompanyName":
+                        //         "VertexPlus Technologies Private Limited",
+                        //     "CompanyCode": "VTPL03"
+                        //   },
+                        //   "EmailId": "admin@vertexplus.com",
+                        //   "Password": "password123",
+                        //   "GrantType": "password",
+                        //   "Reason": "Dummy Login Reason"
+                        // });
+                        // authViewModel.loginApi(data, context);
+                        // print("api hit");
                       }
                     },
                     child:

@@ -7,6 +7,7 @@ import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers/auth_provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,8 +19,17 @@ class HomePage extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     final authProvider = Provider.of<Auth>(context, listen: false);
 
+    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+    Future<void> checkAlreadyLoggedIn() async {
+      final SharedPreferences prefs = await _prefs;
+
+      var username = prefs.getString("userName");
+      print(username);
+    }
+
     return Scaffold(
-      backgroundColor: AppColors.loginPageInputText,
+      backgroundColor: AppColors.offwhite,
       body: SingleChildScrollView(
         child: Stack(
           alignment: Alignment.center,
@@ -49,20 +59,26 @@ class HomePage extends StatelessWidget {
                               radius: 30,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
+                                radius: 28,
                                 child: Image.asset(
                                   "assets/images/bell_icon@3x.png",
                                   width: width * 0.07,
                                   height: height * 0.07,
                                 ),
-                                radius: 28,
                               ),
                             ),
                             const Spacer(),
-                            Container(
-                              child: Image.asset(
-                                "assets/images/bell_icon@3x.png",
-                                width: width * 0.07,
-                                height: height * 0.07,
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutesName.punching);
+                              },
+                              child: Container(
+                                child: Image.asset(
+                                  "assets/images/bell_icon@3x.png",
+                                  width: width * 0.07,
+                                  height: height * 0.07,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -137,22 +153,17 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PunchingPage(),
-                            ),
-                          );
+                          Navigator.pushNamed(context, RoutesName.leaveTracker);
                         },
                         child: Container(
                           height: width * 0.43,
                           width: width * 0.43,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
@@ -190,7 +201,7 @@ class HomePage extends StatelessWidget {
                       Container(
                         height: width * 0.43,
                         width: width * 0.43,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),

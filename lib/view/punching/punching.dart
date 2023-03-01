@@ -266,7 +266,7 @@ class _PunchingPageState extends State<PunchingPage> {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                            color: AppColors.loginPageInputText,
+                            color: AppColors.offwhite,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(5),
                               topLeft: Radius.circular(5),
@@ -288,7 +288,7 @@ class _PunchingPageState extends State<PunchingPage> {
                           height: 50,
                           width: 50,
                           decoration: const BoxDecoration(
-                            color: AppColors.loginPageInputText,
+                            color: AppColors.offwhite,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(5),
                               topLeft: Radius.circular(5),
@@ -310,7 +310,7 @@ class _PunchingPageState extends State<PunchingPage> {
                           height: 50,
                           width: 50,
                           decoration: const BoxDecoration(
-                            color: AppColors.loginPageInputText,
+                            color: AppColors.offwhite,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(5),
                               topLeft: Radius.circular(5),

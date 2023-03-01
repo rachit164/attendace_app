@@ -48,18 +48,20 @@ class Auth with ChangeNotifier {
             "GrantType": "password",
             "Reason": "Dummy Login Reason"
           }));
-      // print(response.body);
+      print(response.body);
       final responseData = json.decode(response.body);
+      print(responseData);
 
       result = responseData['Result'];
       token = result['Token'];
       var transactionMessage = result['TransactionMessage'];
       message = transactionMessage['Message'];
       userName = result['UserName'];
+      print(userName);
       userImage = result['EmaployeeImagePath'];
 
       if (responseData['Success'] == true) {
-        Navigator.pushNamed(context, RoutesName.punching);
+        Navigator.pushNamed(context, RoutesName.homepage);
         alert.showError(context, message!);
         //  setLoading(true);
       } else {

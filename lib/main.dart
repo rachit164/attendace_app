@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                 // ),
               ),
         ),
-        initialRoute: RoutesName.loginPage,
+        initialRoute: RoutesName.splashPage,
         onGenerateRoute: Routes.generateRoute,
         // routes: {
         //   "/": (context) => const PunchingPage(),
