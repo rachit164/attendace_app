@@ -1,7 +1,4 @@
-import 'package:attendance_app/view/my_attendance/my_attendance.dart';
-import 'package:attendance_app/view/punching/punching.dart';
 import 'package:attendance_app/utils/colors.dart';
-import 'package:attendance_app/utils/routes/routes.dart';
 import 'package:attendance_app/utils/routes/routes_name.dart';
 import 'package:attendance_app/widgets/big_text_bold.dart';
 import 'package:attendance_app/widgets/text_light.dart';
@@ -10,23 +7,34 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers/auth_provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String? username;
+
+  @override
+  void initState() {
+    super.initState();
+    checkAlreadyLoggedIn();
+  }
+
+  checkAlreadyLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString("userName") ?? "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final authProvider = Provider.of<Auth>(context, listen: false);
-
-    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-    Future<void> checkAlreadyLoggedIn() async {
-      final SharedPreferences prefs = await _prefs;
-
-      var username = prefs.getString("userName");
-      print(username);
-    }
 
     return Scaffold(
       backgroundColor: AppColors.offwhite,
@@ -98,7 +106,7 @@ class HomePage extends StatelessWidget {
                         padding: EdgeInsets.only(
                             left: width * 0.03, top: height * 0.02),
                         child: BigText(
-                          text: authProvider.userName.toString(),
+                          text: username.toString(),
                           size: 25,
                           color: Colors.white,
                         ),

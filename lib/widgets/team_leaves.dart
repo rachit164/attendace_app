@@ -113,7 +113,7 @@ class _TeamLeavesState extends State<TeamLeaves> {
                               child: GestureDetector(
                                 onTap: () {},
                                 child: DraggableScrollableSheet(
-                                  initialChildSize: 0.5,
+                                  initialChildSize: 0.6,
                                   minChildSize: 0.2,
                                   maxChildSize: 0.75,
                                   builder: (_, controller) {
@@ -198,7 +198,7 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                                     "Applied On",
                                                                 size: 14,
                                                                 color: AppColors
-                                                                    .blueColor,
+                                                                    .greyColor,
                                                               ),
                                                               TextLight(
                                                                 text:
@@ -213,40 +213,6 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                       ),
                                                       SizedBox(
                                                         height: height * 0.02,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Image.asset(
-                                                            "assets/images/date@2x.png",
-                                                            width: 35,
-                                                            height: 35,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 8,
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              TextLight(
-                                                                text:
-                                                                    "Applied On",
-                                                                size: 14,
-                                                                color: AppColors
-                                                                    .blueColor,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 3,
-                                                              ),
-                                                              TextLight(
-                                                                text:
-                                                                    "Feb 28,2023",
-                                                                size: 16,
-                                                              ),
-                                                            ],
-                                                          )
-                                                        ],
                                                       ),
                                                       const SizedBox(
                                                         height: 15,
@@ -271,7 +237,7 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                                     "Period of leave requested",
                                                                 size: 14,
                                                                 color: AppColors
-                                                                    .blueColor,
+                                                                    .greyColor,
                                                               ),
                                                               const SizedBox(
                                                                 height: 3,
@@ -308,7 +274,7 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                                     "Reason of Leave requested",
                                                                 size: 14,
                                                                 color: AppColors
-                                                                    .blueColor,
+                                                                    .greyColor,
                                                               ),
                                                               const SizedBox(
                                                                 height: 3,
@@ -326,12 +292,6 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                         height: 15,
                                                       ),
                                                       AnimatedContainer(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 5,
-                                                                left: 10,
-                                                                right: 10),
                                                         duration:
                                                             const Duration(
                                                                 seconds: 2),
@@ -350,117 +310,181 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                           data: ThemeData().copyWith(
                                                               dividerColor: Colors
                                                                   .transparent),
-                                                          child: ExpansionTile(
-                                                            title: const Text(
-                                                                '1 task assigned in this duration'),
-                                                            leading:
-                                                                Image.asset(
-                                                              "assets/images/tick@2x.png",
-                                                              width: 20,
-                                                              height: 20,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 8,
+                                                                    right: 8),
+                                                            child:
+                                                                ExpansionTile(
+                                                              title: const Text(
+                                                                  '1 task assigned in this duration'),
+                                                              // leading:
+                                                              //     Image.asset(
+                                                              //   "assets/images/tick@2x.png",
+                                                              //   width: 20,
+                                                              //   height: 20,
+                                                              // ),
+                                                              children: [
+                                                                Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    TextLight(
+                                                                      text:
+                                                                          "Date & Time",
+                                                                      size: 15,
+                                                                      color: AppColors
+                                                                          .greyColor,
+                                                                    ),
+                                                                    TextLight(
+                                                                      text:
+                                                                          "Feb 28,2023 - 11:00 AM to 09:00 PM",
+                                                                      size: 15,
+                                                                      color: AppColors
+                                                                          .blackColor,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 8,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            TextLight(
+                                                                              text: "Task",
+                                                                              size: 15,
+                                                                              color: AppColors.greyColor,
+                                                                            ),
+                                                                            TextLight(
+                                                                              text: "New web UI design",
+                                                                              size: 15,
+                                                                              color: AppColors.blackColor,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            TextLight(
+                                                                              text: "Project Manager",
+                                                                              size: 15,
+                                                                              color: AppColors.greyColor,
+                                                                            ),
+                                                                            TextLight(
+                                                                              text: "Lokesh Gupta",
+                                                                              size: 15,
+                                                                              color: AppColors.blackColor,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 6,
+                                                                    )
+                                                                  ],
+                                                                )
+                                                              ],
                                                             ),
-                                                            children: [
-                                                              Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  TextLight(
-                                                                    text:
-                                                                        "Date & Time",
-                                                                    size: 15,
-                                                                    color: AppColors
-                                                                        .greyColor,
-                                                                  ),
-                                                                  TextLight(
-                                                                    text:
-                                                                        "Feb 28,2023 - 11:00 AM to 09:00 PM",
-                                                                    size: 15,
-                                                                    color: AppColors
-                                                                        .blackColor,
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 8,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          TextLight(
-                                                                            text:
-                                                                                "Task",
-                                                                            size:
-                                                                                15,
-                                                                            color:
-                                                                                AppColors.greyColor,
-                                                                          ),
-                                                                          TextLight(
-                                                                            text:
-                                                                                "New web UI design",
-                                                                            size:
-                                                                                15,
-                                                                            color:
-                                                                                AppColors.blackColor,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          TextLight(
-                                                                            text:
-                                                                                "Project Manager",
-                                                                            size:
-                                                                                15,
-                                                                            color:
-                                                                                AppColors.greyColor,
-                                                                          ),
-                                                                          TextLight(
-                                                                            text:
-                                                                                "Lokesh Gupta",
-                                                                            size:
-                                                                                15,
-                                                                            color:
-                                                                                AppColors.blackColor,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 6,
-                                                                  )
-                                                                ],
-                                                              )
-                                                            ],
                                                           ),
                                                         ),
                                                       ),
                                                       const SizedBox(
-                                                        height: 10,
+                                                        height: 20,
                                                       ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                      Row(
                                                         children: [
-                                                          TextLight(
-                                                            text: "Status",
-                                                            color: AppColors
-                                                                .blueColor,
-                                                            size: 16,
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              TextLight(
+                                                                text: "Status",
+                                                                color: AppColors
+                                                                    .greyColor,
+                                                                size: 16,
+                                                              ),
+                                                              TextLight(
+                                                                text:
+                                                                    "Approved",
+                                                                color: AppColors
+                                                                    .redColor,
+                                                                size: 16,
+                                                              ),
+                                                            ],
                                                           ),
-                                                          TextLight(
-                                                            text: "Approved",
-                                                            color: AppColors
-                                                                .redColor,
-                                                            size: 16,
+                                                          const Spacer(),
+                                                          Container(
+                                                            width: 100,
+                                                            height: 44,
+                                                            child:
+                                                                ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                      textStyle:
+                                                                          const TextStyle(
+                                                                        fontSize:
+                                                                            18,
+                                                                      ),
+                                                                      primary:
+                                                                          AppColors
+                                                                              .greenColor,
+                                                                      elevation:
+                                                                          0.0,
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8)),
+                                                              onPressed: () {},
+                                                              child: const Text(
+                                                                'Approve',
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .whiteColor),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Container(
+                                                            width: 100,
+                                                            height: 44,
+                                                            child:
+                                                                ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                      textStyle:
+                                                                          const TextStyle(
+                                                                        fontSize:
+                                                                            18,
+                                                                      ),
+                                                                      elevation:
+                                                                          0.0,
+                                                                      primary: AppColors
+                                                                          .redColor
+                                                                          .withOpacity(
+                                                                              0.1),
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8)),
+                                                              onPressed: () {},
+                                                              child: const Text(
+                                                                'Reject',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ],
                                                       )
@@ -482,9 +506,11 @@ class _TeamLeavesState extends State<TeamLeaves> {
                       );
                     },
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                          top: 8.0, left: 12, right: 12, bottom: 8),
                       child: Container(
-                        height: 160,
+                        height: 135,
+                        width: double.infinity,
                         decoration: const BoxDecoration(
                           color: AppColors.whiteColor,
                           borderRadius: BorderRadius.all(
@@ -493,104 +519,112 @@ class _TeamLeavesState extends State<TeamLeaves> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 27,
-                                        backgroundColor: Colors.white,
-                                        child: CircleAvatar(
-                                          radius: 25,
-                                          child: Image.asset(
-                                            "assets/images/bell_icon@3x.png",
-                                            width: 20,
-                                            height: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          BigText(
-                                            text: 'Rahul Mishra',
-                                            size: 18,
-                                          ),
-                                          TextLight(
-                                            text: "Web Designer",
-                                            size: 16,
-                                            color: AppColors.greyColor,
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        height: 25,
-                                        width: 85,
-                                        decoration: const BoxDecoration(
-                                          color: AppColors.offwhite,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(5),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: TextLight(
-                                            text: _items[index]["status"],
-                                            size: 14,
-                                            color: AppColors.redColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  CircleAvatar(
+                                    radius: 25,
+                                    child: Image.asset(
+                                      "assets/images/bell_icon@3x.png",
+                                      width: 20,
+                                      height: 20,
+                                    ),
                                   ),
                                   const SizedBox(
-                                    height: 12,
+                                    width: 8,
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TextLight(
-                                            text: _items[index]["time"],
-                                            size: 16,
-                                            color: AppColors.greyColor,
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          BigText(
-                                            text: _items[index]["date"],
-                                            size: 20,
-                                          )
-                                        ],
+                                      BigText(
+                                        text: 'Rahul Mishra',
+                                        size: 16,
                                       ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        height: 40,
-                                        width: 40,
-                                        decoration: const BoxDecoration(
-                                          color: AppColors.offwhite,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(5),
-                                          ),
-                                        ),
-                                        child:
-                                            const Icon(Icons.arrow_forward_ios),
+                                      TextLight(
+                                        text: "Web Designer",
+                                        size: 14,
+                                        color: AppColors.greyColor,
                                       ),
                                     ],
+                                  ),
+                                  const Spacer(),
+                                  Container(
+                                    height: 25,
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      color: _items[index]["status"] ==
+                                              "Approved"
+                                          ? AppColors.greenColor
+                                              .withOpacity(0.1)
+                                          : (_items[index]["status"] ==
+                                                  "Rejected"
+                                              ? AppColors.redColor
+                                                  .withOpacity(0.1)
+                                              : Colors.yellow.withOpacity(0.1)),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: TextLight(
+                                        text: _items[index]["status"],
+                                        size: 12,
+                                        color: _items[index]["status"] ==
+                                                "Approved"
+                                            ? AppColors.greenColor
+                                            : (_items[index]["status"] ==
+                                                    "Rejected"
+                                                ? AppColors.redColor
+                                                : Colors.yellow),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextLight(
+                                        text: _items[index]["time"],
+                                        size: 14,
+                                        color: AppColors.greyColor,
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      BigText(
+                                        text: _items[index]["date"],
+                                        size: 18,
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    height: 35,
+                                    width: 35,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.offwhite,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: AppColors.greyColor,
+                                    ),
                                   ),
                                 ],
                               ),

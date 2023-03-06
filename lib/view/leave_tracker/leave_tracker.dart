@@ -17,9 +17,14 @@ class LeaveTracker extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
+            leading: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
             ),
             backgroundColor: AppColors.offwhite,
             bottom: const TabBar(
@@ -31,16 +36,17 @@ class LeaveTracker extends StatelessWidget {
                 Text(
                   "My Leaves",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Team Leaves",
                   style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold),
+                    fontSize: 17,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

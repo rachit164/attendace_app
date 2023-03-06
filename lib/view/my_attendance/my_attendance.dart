@@ -44,7 +44,12 @@ class _MyAttendanceState extends State<MyAttendance> {
             height: height * 0.15,
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(
+                left: 10.0,
+                right: 10,
+                bottom: 10,
+                top: 10,
+              ),
               child: Row(
                 children: [
                   Image.asset(
@@ -101,7 +106,7 @@ class _MyAttendanceState extends State<MyAttendance> {
             height: 10,
           ),
           Container(
-              height: height * 0.62,
+              height: height * 0.61,
               width: width,
               child: ListView.builder(
                   itemCount: _items.length,
@@ -165,7 +170,7 @@ class _MyAttendanceState extends State<MyAttendance> {
                                   height: height * 0.005,
                                 ),
                                 Container(
-                                  height: height * 0.005,
+                                  height: height * 0.003,
                                   color: AppColors.blueColor,
                                   width: width * 0.5,
                                 ),

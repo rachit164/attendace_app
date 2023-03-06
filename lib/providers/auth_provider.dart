@@ -57,7 +57,6 @@ class Auth with ChangeNotifier {
       var transactionMessage = result['TransactionMessage'];
       message = transactionMessage['Message'];
       userName = result['UserName'];
-      print(userName);
       userImage = result['EmaployeeImagePath'];
 
       if (responseData['Success'] == true) {
@@ -74,8 +73,9 @@ class Auth with ChangeNotifier {
     }
 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("token", token).toString();
-    await prefs.setString("userName", userName!).toString();
+    prefs.setString("token", token).toString();
+    prefs.setString("userName", userName!).toString();
+    prefs.setString(key, value)
 
     notifyListeners();
   }

@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:attendance_app/utils/routes/routes_name.dart';
 import 'package:attendance_app/view/leave_request/leave_request.dart';
 import 'package:attendance_app/widgets/text_light.dart';
 
@@ -115,7 +113,7 @@ class _MyLeavesState extends State<MyLeaves> {
                               child: GestureDetector(
                                 onTap: () {},
                                 child: DraggableScrollableSheet(
-                                  initialChildSize: 0.4,
+                                  initialChildSize: 0.5,
                                   minChildSize: 0.2,
                                   maxChildSize: 0.75,
                                   builder: (_, controller) {
@@ -171,9 +169,9 @@ class _MyLeavesState extends State<MyLeaves> {
                                                                     "Applied On",
                                                                 size: 14,
                                                                 color: AppColors
-                                                                    .blueColor,
+                                                                    .greyColor,
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 3,
                                                               ),
                                                               TextLight(
@@ -208,9 +206,9 @@ class _MyLeavesState extends State<MyLeaves> {
                                                                     "Period of leave requested",
                                                                 size: 14,
                                                                 color: AppColors
-                                                                    .blueColor,
+                                                                    .greyColor,
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 3,
                                                               ),
                                                               TextLight(
@@ -245,7 +243,7 @@ class _MyLeavesState extends State<MyLeaves> {
                                                                     "Reason of Leave requested",
                                                                 size: 14,
                                                                 color: AppColors
-                                                                    .blueColor,
+                                                                    .greyColor,
                                                               ),
                                                               const SizedBox(
                                                                 height: 3,
@@ -266,7 +264,6 @@ class _MyLeavesState extends State<MyLeaves> {
                                                         padding:
                                                             const EdgeInsets
                                                                     .only(
-                                                                bottom: 5,
                                                                 left: 10,
                                                                 right: 10),
                                                         duration:
@@ -289,13 +286,14 @@ class _MyLeavesState extends State<MyLeaves> {
                                                                   .transparent),
                                                           child: ExpansionTile(
                                                             title: const Text(
-                                                                '1 task assigned in this duration'),
-                                                            leading:
-                                                                Image.asset(
-                                                              "assets/images/tick@2x.png",
-                                                              width: 20,
-                                                              height: 20,
+                                                              '1 task assigned in this duration',
                                                             ),
+                                                            // leading:
+                                                            //     Image.asset(
+                                                            //   "assets/images/tick@2x.png",
+                                                            //   width: 15,
+                                                            //   height: 15,
+                                                            // ),
                                                             children: [
                                                               Column(
                                                                 crossAxisAlignment:
@@ -344,6 +342,150 @@ class _MyLeavesState extends State<MyLeaves> {
                                                                             color:
                                                                                 AppColors.blackColor,
                                                                           ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
+                                                                          TextLight(
+                                                                            text:
+                                                                                "New web UI design",
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                AppColors.blackColor,
+                                                                          ),
                                                                         ],
                                                                       ),
                                                                       Column(
@@ -370,7 +512,7 @@ class _MyLeavesState extends State<MyLeaves> {
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  SizedBox(
+                                                                  const SizedBox(
                                                                     height: 6,
                                                                   )
                                                                 ],
@@ -390,7 +532,7 @@ class _MyLeavesState extends State<MyLeaves> {
                                                           TextLight(
                                                             text: "Status",
                                                             color: AppColors
-                                                                .blueColor,
+                                                                .greyColor,
                                                             size: 16,
                                                           ),
                                                           TextLight(
@@ -398,6 +540,9 @@ class _MyLeavesState extends State<MyLeaves> {
                                                             color: AppColors
                                                                 .redColor,
                                                             size: 16,
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 30,
                                                           )
                                                         ],
                                                       )
@@ -417,237 +562,11 @@ class _MyLeavesState extends State<MyLeaves> {
                           );
                         },
                       );
-                      // showModalBottomSheet<void>(
-                      //   isScrollControlled: true,
-                      //   context: context,
-                      //   backgroundColor: Colors.transparent,
-                      //   builder: (BuildContext context) {
-                      //     return Container(
-                      //       decoration: const BoxDecoration(
-                      //         color: AppColors.whiteColor,
-                      //         borderRadius: BorderRadius.only(
-                      //           topRight: Radius.circular(40),
-                      //           topLeft: Radius.circular(40),
-                      //         ),
-                      //       ),
-                      //       height: height * 0.55,
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.only(
-                      //             left: 10, right: 8, top: 20),
-                      //         child: Column(
-                      //           mainAxisAlignment: MainAxisAlignment.start,
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Row(
-                      //               children: [
-                      //                 Image.asset(
-                      //                   "assets/images/date@2x.png",
-                      //                   width: 35,
-                      //                   height: 35,
-                      //                 ),
-                      //                 const SizedBox(
-                      //                   width: 8,
-                      //                 ),
-                      //                 Column(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     TextLight(
-                      //                       text: "Applied On",
-                      //                       size: 14,
-                      //                       color: AppColors.blueColor,
-                      //                     ),
-                      //                     TextLight(
-                      //                       text: "Feb 28,2023",
-                      //                       size: 16,
-                      //                     ),
-                      //                   ],
-                      //                 )
-                      //               ],
-                      //             ),
-                      //             const SizedBox(
-                      //               height: 15,
-                      //             ),
-                      //             Row(
-                      //               children: [
-                      //                 Image.asset(
-                      //                   "assets/images/date@2x.png",
-                      //                   width: 35,
-                      //                   height: 35,
-                      //                 ),
-                      //                 const SizedBox(
-                      //                   width: 10,
-                      //                 ),
-                      //                 Column(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     TextLight(
-                      //                       text: "Period of leave requested",
-                      //                       size: 14,
-                      //                       color: AppColors.blueColor,
-                      //                     ),
-                      //                     TextLight(
-                      //                       text: "Feb 28,2023 - Mar 10,2023",
-                      //                       size: 16,
-                      //                     ),
-                      //                   ],
-                      //                 )
-                      //               ],
-                      //             ),
-                      //             const SizedBox(
-                      //               height: 15,
-                      //             ),
-                      //             Row(
-                      //               children: [
-                      //                 Image.asset(
-                      //                   "assets/images/reason@2x.png",
-                      //                   width: 35,
-                      //                   height: 35,
-                      //                 ),
-                      //                 const SizedBox(
-                      //                   width: 10,
-                      //                 ),
-                      //                 Column(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     TextLight(
-                      //                       text: "Reason of Leave requested",
-                      //                       size: 14,
-                      //                       color: AppColors.blueColor,
-                      //                     ),
-                      //                     TextLight(
-                      //                       text:
-                      //                           "Leave application for function.",
-                      //                       size: 16,
-                      //                     ),
-                      //                   ],
-                      //                 )
-                      //               ],
-                      //             ),
-                      //             const SizedBox(
-                      //               height: 15,
-                      //             ),
-                      //             AnimatedContainer(
-                      //               padding: const EdgeInsets.only(
-                      //                   bottom: 5, left: 10, right: 10),
-                      //               duration: const Duration(seconds: 2),
-                      //               decoration: BoxDecoration(
-                      //                 border: Border.all(color: Colors.black12),
-                      //               ),
-                      //               child: Theme(
-                      //                 data: ThemeData().copyWith(
-                      //                     dividerColor: Colors.transparent),
-                      //                 child: ExpansionTile(
-                      //                   title: const Text(
-                      //                       '1 task assigned in this duration'),
-                      //                   leading: Image.asset(
-                      //                     "assets/images/tick@2x.png",
-                      //                     width: 20,
-                      //                     height: 20,
-                      //                   ),
-                      //                   children: [
-                      //                     Column(
-                      //                       crossAxisAlignment:
-                      //                           CrossAxisAlignment.start,
-                      //                       children: [
-                      //                         TextLight(
-                      //                           text: "Date & Time",
-                      //                           size: 15,
-                      //                           color: AppColors.greyColor,
-                      //                         ),
-                      //                         TextLight(
-                      //                           text:
-                      //                               "Feb 28,2023 - 11:00 AM to 09:00 PM",
-                      //                           size: 15,
-                      //                           color: AppColors.blackColor,
-                      //                         ),
-                      //                         const SizedBox(
-                      //                           height: 2,
-                      //                         ),
-                      //                         Row(
-                      //                           mainAxisAlignment:
-                      //                               MainAxisAlignment
-                      //                                   .spaceBetween,
-                      //                           children: [
-                      //                             Column(
-                      //                               crossAxisAlignment:
-                      //                                   CrossAxisAlignment
-                      //                                       .start,
-                      //                               children: [
-                      //                                 TextLight(
-                      //                                   text: "Task",
-                      //                                   size: 15,
-                      //                                   color:
-                      //                                       AppColors.greyColor,
-                      //                                 ),
-                      //                                 TextLight(
-                      //                                   text:
-                      //                                       "New web UI design",
-                      //                                   size: 15,
-                      //                                   color: AppColors
-                      //                                       .blackColor,
-                      //                                 ),
-                      //                               ],
-                      //                             ),
-                      //                             Column(
-                      //                               crossAxisAlignment:
-                      //                                   CrossAxisAlignment
-                      //                                       .start,
-                      //                               children: [
-                      //                                 TextLight(
-                      //                                   text: "Project Manager",
-                      //                                   size: 15,
-                      //                                   color:
-                      //                                       AppColors.greyColor,
-                      //                                 ),
-                      //                                 TextLight(
-                      //                                   text: "Lokesh Gupta",
-                      //                                   size: 15,
-                      //                                   color: AppColors
-                      //                                       .blackColor,
-                      //                                 ),
-                      //                               ],
-                      //                             ),
-                      //                           ],
-                      //                         ),
-                      //                       ],
-                      //                     )
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             const SizedBox(
-                      //               height: 10,
-                      //             ),
-                      //             Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.start,
-                      //               children: [
-                      //                 TextLight(
-                      //                   text: "Status",
-                      //                   color: AppColors.blueColor,
-                      //                   size: 16,
-                      //                 ),
-                      //                 TextLight(
-                      //                   text: "Approved",
-                      //                   color: AppColors.redColor,
-                      //                   size: 16,
-                      //                 )
-                      //               ],
-                      //             )
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
-                      // );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: 110,
+                        height: 100,
                         decoration: const BoxDecoration(
                           color: AppColors.whiteColor,
                           borderRadius: BorderRadius.all(
@@ -665,18 +584,32 @@ class _MyLeavesState extends State<MyLeaves> {
                                 children: [
                                   Container(
                                     height: 25,
-                                    width: 85,
-                                    decoration: const BoxDecoration(
-                                      color: AppColors.offwhite,
-                                      borderRadius: BorderRadius.all(
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      color: _items[index]["status"] ==
+                                              "Approved"
+                                          ? AppColors.greenColor
+                                              .withOpacity(0.1)
+                                          : (_items[index]["status"] ==
+                                                  "Rejected"
+                                              ? AppColors.redColor
+                                                  .withOpacity(0.1)
+                                              : Colors.yellow.withOpacity(0.1)),
+                                      borderRadius: const BorderRadius.all(
                                         Radius.circular(5),
                                       ),
                                     ),
                                     child: Center(
                                       child: TextLight(
                                         text: _items[index]["status"],
-                                        size: 14,
-                                        color: AppColors.redColor,
+                                        size: 12,
+                                        color: _items[index]["status"] ==
+                                                "Approved"
+                                            ? AppColors.greenColor
+                                            : (_items[index]["status"] ==
+                                                    "Rejected"
+                                                ? AppColors.redColor
+                                                : Colors.yellow),
                                       ),
                                     ),
                                   ),
@@ -693,7 +626,7 @@ class _MyLeavesState extends State<MyLeaves> {
                                   ),
                                   BigText(
                                     text: _items[index]["date"],
-                                    size: 20,
+                                    size: 18,
                                   )
                                 ],
                               ),
