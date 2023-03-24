@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? username;
+  String? userImage;
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       username = prefs.getString("userName") ?? "";
+      userImage = prefs.getString("userImage") ?? "No Image";
     });
   }
 
@@ -67,13 +69,19 @@ class _HomePageState extends State<HomePage> {
                               radius: 30,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
-                                radius: 28,
-                                child: Image.asset(
-                                  "assets/images/bell_icon@3x.png",
-                                  width: width * 0.07,
-                                  height: height * 0.07,
-                                ),
-                              ),
+                                  radius: 28,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      userImage!,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  )
+                                  // Image.asset(
+                                  //   "assets/images/bell_icon@3x.png",
+                                  //   width: width * 0.07,
+                                  //   height: height * 0.07,
+                                  // ),
+                                  ),
                             ),
                             const Spacer(),
                             InkWell(

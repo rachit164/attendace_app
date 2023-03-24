@@ -14,7 +14,8 @@ class Dropdown extends StatefulWidget {
 class _Dropdown extends State<Dropdown> {
   @override
   void initState() {
-    var dropDownData = Provider.of<DropDownProvider>(context, listen: false);
+    var dropDownData =
+        Provider.of<DropDownProvider>(context, listen: false).dropDown();
     super.initState();
   }
 
@@ -51,7 +52,7 @@ class _Dropdown extends State<Dropdown> {
       decoration: BoxDecoration(
           color: AppColors.offwhite, borderRadius: BorderRadius.circular(8)),
       width: double.infinity,
-      padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 8, right: 8),
       child: DropdownButtonFormField(
         value: dropdownValue,
         decoration: const InputDecoration(
@@ -63,6 +64,8 @@ class _Dropdown extends State<Dropdown> {
         ),
         hint: const Text(
           'Please select company',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 16,
             fontFamily: 'Inter',
@@ -72,7 +75,9 @@ class _Dropdown extends State<Dropdown> {
         isExpanded: true,
         icon: const Icon(Icons.arrow_drop_down),
         style: const TextStyle(color: AppColors.offwhite),
-        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(12.0),
+        ),
         // onChanged: (Map? value) {
         //   setState(() {
         //     dropdownValue = value!;
@@ -83,10 +88,13 @@ class _Dropdown extends State<Dropdown> {
             value: value,
             child: Text(
               value['CompanyName'],
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.blackColor,
-                  fontFamily: 'Inter'),
+                fontSize: 16,
+                color: AppColors.blackColor,
+                fontFamily: 'Inter',
+              ),
             ),
           );
         }).toList(),

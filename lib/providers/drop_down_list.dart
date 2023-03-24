@@ -12,12 +12,12 @@ class DropDownProvider with ChangeNotifier {
     try {
       final url = Uri.parse(AppConstants.BASE_URL + AppConstants.DROP_DOWN);
       final response = await http.post(url, headers: <String, String>{
-        'VTApiKey':
-            'VTPL_APP01_03_IbLKyiuhyKBLUJSgipwlactuyI87UJJNBRTFSPLIKEO87656#\$%#@@.E',
+        'VTApiKey': AppConstants.VT_API_KEY,
         "content-type": "application/json",
         "accept": "application/json",
       });
       var data = response.body;
+      print(data);
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);

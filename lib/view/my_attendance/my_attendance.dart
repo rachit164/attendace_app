@@ -41,7 +41,7 @@ class _MyAttendanceState extends State<MyAttendance> {
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            height: height * 0.15,
+            height: height * 0.18,
             width: double.infinity,
             child: Padding(
               padding: const EdgeInsets.only(
@@ -102,11 +102,8 @@ class _MyAttendanceState extends State<MyAttendance> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
           Container(
-              height: height * 0.61,
+              height: height * 0.60,
               width: width,
               child: ListView.builder(
                   itemCount: _items.length,

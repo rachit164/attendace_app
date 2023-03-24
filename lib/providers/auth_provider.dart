@@ -16,7 +16,7 @@ class Auth with ChangeNotifier {
   bool get loading => _loading;
   var token;
   var result;
-  var userImage;
+  String? userImage;
   String? userName;
   String? message;
   AlertMessages alert = AlertMessages();
@@ -43,8 +43,8 @@ class Auth with ChangeNotifier {
               "CompanyName": "VertexPlus Technologies Private Limited",
               "CompanyCode": "VTPL03"
             },
-            "EmailId": email,
-            "Password": password,
+            "EmailId": "admin@vertexplus.com",
+            "Password": "password123",
             "GrantType": "password",
             "Reason": "Dummy Login Reason"
           }));
@@ -62,7 +62,7 @@ class Auth with ChangeNotifier {
       if (responseData['Success'] == true) {
         Navigator.pushNamed(context, RoutesName.homepage);
         alert.showError(context, message!);
-        //  setLoading(true);
+        setLoading(false);
       } else {
         setLoading(false);
         alert.showError(context, message!);
@@ -75,7 +75,7 @@ class Auth with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token).toString();
     prefs.setString("userName", userName!).toString();
-    prefs.setString(key, value)
+    prefs.setString("userImage", userImage!).toString();
 
     notifyListeners();
   }

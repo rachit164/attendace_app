@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     });
     var dropDownData =
         Provider.of<DropDownProvider>(context, listen: false).dropDown();
-    print(dropDownData);
     super.initState();
   }
 
@@ -212,15 +211,13 @@ class _LoginPageState extends State<LoginPage> {
                         // print("api hit");
                       }
                     },
-                    child:
-                        //authProvider.loading
-                        authViewModel.loading
-                            ? const CircularProgressIndicator()
-                            : const Text(
-                                'Sign In',
-                                style: TextStyle(
-                                    fontSize: 18, fontFamily: 'Inter'),
-                              ),
+                    child: authProvider.loading
+                        // authViewModel.loading
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            'Sign In',
+                            style: TextStyle(fontSize: 18, fontFamily: 'Inter'),
+                          ),
                   ),
                 ),
               ],

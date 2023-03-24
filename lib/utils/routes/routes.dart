@@ -12,7 +12,8 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutesName.homepage:
-        return MaterialPageRoute(builder: (BuildContext context) => HomePage());
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const HomePage());
 
       case RoutesName.loginPage:
         return MaterialPageRoute(

@@ -3,6 +3,7 @@ import 'package:attendance_app/widgets/text_light.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/colors.dart';
 import '../view/leave_request/leave_request.dart';
@@ -17,6 +18,8 @@ class TeamLeaves extends StatefulWidget {
 
 class _TeamLeavesState extends State<TeamLeaves> {
   List _items = [];
+  String? username;
+  String? userImage;
   // Fetch content from the json file
   Future<void> readJson() async {
     final String response = await rootBundle.loadString('assets/myleaves.json');
@@ -27,9 +30,18 @@ class _TeamLeavesState extends State<TeamLeaves> {
     });
   }
 
+  user() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString("userName") ?? "";
+      userImage = prefs.getString("userImage") ?? "";
+    });
+  }
+
   @override
   initState() {
     super.initState();
+    user();
     readJson();
   }
 
@@ -41,7 +53,11 @@ class _TeamLeavesState extends State<TeamLeaves> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LeaveRequest()));
+            context,
+            MaterialPageRoute(
+              builder: (context) => LeaveRequest(),
+            ),
+          );
         },
         backgroundColor: AppColors.blueColor,
         elevation: 15,
@@ -156,14 +172,15 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                             backgroundColor:
                                                                 Colors.white,
                                                             child: CircleAvatar(
-                                                              radius: 25,
-                                                              child:
-                                                                  Image.asset(
-                                                                "assets/images/bell_icon@3x.png",
-                                                                width: 20,
-                                                                height: 20,
-                                                              ),
-                                                            ),
+                                                                radius: 25,
+                                                                child: ClipOval(
+                                                                  child: Image
+                                                                      .network(
+                                                                    userImage!,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                  ),
+                                                                )),
                                                           ),
                                                           const SizedBox(
                                                             width: 8,
@@ -174,20 +191,33 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                                     .start,
                                                             children: [
                                                               BigText(
-                                                                text:
-                                                                    'Rahul Mishra',
-                                                                size: 18,
+                                                                text: username!,
+                                                                size: 16,
                                                               ),
                                                               TextLight(
                                                                 text:
                                                                     "Web Designer",
-                                                                size: 16,
+                                                                size: 14,
                                                                 color: AppColors
                                                                     .greyColor,
                                                               ),
                                                             ],
                                                           ),
-                                                          const Spacer(),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Image.asset(
+                                                            "assets/images/date@2x.png",
+                                                            width: 35,
+                                                            height: 35,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
                                                           Column(
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
@@ -200,19 +230,17 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                                 color: AppColors
                                                                     .greyColor,
                                                               ),
+                                                              const SizedBox(
+                                                                height: 3,
+                                                              ),
                                                               TextLight(
                                                                 text:
                                                                     "Feb 28,2023",
-                                                                size: 15,
-                                                                color: AppColors
-                                                                    .blackColor,
+                                                                size: 16,
                                                               ),
                                                             ],
-                                                          ),
+                                                          )
                                                         ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: height * 0.02,
                                                       ),
                                                       const SizedBox(
                                                         height: 15,
@@ -294,12 +322,14 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                       AnimatedContainer(
                                                         duration:
                                                             const Duration(
-                                                                seconds: 2),
+                                                          seconds: 2,
+                                                        ),
                                                         decoration:
                                                             BoxDecoration(
                                                           border: Border.all(
-                                                              color: Colors
-                                                                  .black12),
+                                                            color:
+                                                                Colors.black12,
+                                                          ),
                                                           borderRadius:
                                                               const BorderRadius
                                                                   .all(
@@ -308,14 +338,13 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                         ),
                                                         child: Theme(
                                                           data: ThemeData().copyWith(
-                                                              dividerColor: Colors
-                                                                  .transparent),
+                                                            dividerColor: Colors
+                                                                .transparent,
+                                                          ),
                                                           child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
+                                                            padding: const EdgeInsets.only(
                                                                     left: 8,
-                                                                    right: 8),
+                                                                    right: 8,),
                                                             child:
                                                                 ExpansionTile(
                                                               title: const Text(
@@ -526,11 +555,12 @@ class _TeamLeavesState extends State<TeamLeaves> {
                               Row(
                                 children: [
                                   CircleAvatar(
-                                    radius: 25,
-                                    child: Image.asset(
-                                      "assets/images/bell_icon@3x.png",
-                                      width: 20,
-                                      height: 20,
+                                    radius: 22,
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        userImage!,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -541,12 +571,12 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       BigText(
-                                        text: 'Rahul Mishra',
-                                        size: 16,
+                                        text: username!,
+                                        size: 15,
                                       ),
                                       TextLight(
                                         text: "Web Designer",
-                                        size: 14,
+                                        size: 13,
                                         color: AppColors.greyColor,
                                       ),
                                     ],
@@ -554,7 +584,7 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                   const Spacer(),
                                   Container(
                                     height: 25,
-                                    width: 75,
+                                    width: 70,
                                     decoration: BoxDecoration(
                                       color: _items[index]["status"] ==
                                               "Approved"
