@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutesName.myAttendance);
+                          Navigator.pushNamed(context, RoutesName.punching);
                         },
                         child: Container(
                           height: width * 0.43,
@@ -214,26 +214,31 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: width * 0.43,
-                        width: width * 0.43,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/images/time_sheet_icon2x.png",
-                              width: width * 0.10,
-                              height: height * 0.10,
-                            ),
-                            TextLight(
-                              text: 'Time Sheet',
-                              size: 16,
-                            )
-                          ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutesName.timeSheet);
+                        },
+                        child: Container(
+                          height: width * 0.43,
+                          width: width * 0.43,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/time_sheet_icon2x.png",
+                                width: width * 0.10,
+                                height: height * 0.10,
+                              ),
+                              TextLight(
+                                text: 'Time Sheet',
+                                size: 16,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(

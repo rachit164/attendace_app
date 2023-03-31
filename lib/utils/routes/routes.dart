@@ -6,6 +6,8 @@ import 'package:attendance_app/view/my_attendance/my_attendance.dart';
 import 'package:attendance_app/view/punching/punching.dart';
 import 'package:attendance_app/utils/routes/routes_name.dart';
 import 'package:attendance_app/view/splash_screen/splash_screen.dart';
+import 'package:attendance_app/view/time_sheet/time_sheet.dart';
+import 'package:attendance_app/view/time_sheet_page/time_sheet_page.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -39,11 +41,21 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) => LeaveRequest());
 
+      case RoutesName.timeSheet:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TimeSheet());
+
+      case RoutesName.timeSheetPage:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TimeSheetPage());
+
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(
             body: Center(
-              child: Text('No route defined'),
+              child: Text(
+                'No route defined',
+              ),
             ),
           );
         });

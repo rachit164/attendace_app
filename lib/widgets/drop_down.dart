@@ -32,7 +32,7 @@ class _Dropdown extends State<Dropdown> {
     },
     {
       "CompanyId": 1,
-      "CompanyName": "VertexPlus Technologies Private Limited",
+      "CompanyName": "VertexPlus Technologies Limited",
       "CompanyCode": "VTPL03"
     },
     {

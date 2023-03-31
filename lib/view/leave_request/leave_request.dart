@@ -66,7 +66,7 @@ class _LeaveRequestState extends State<LeaveRequest> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const DropdownButtonExample(),
+                  const DropdownButton(),
                   const SizedBox(
                     height: 5,
                   ),
@@ -327,43 +327,6 @@ class _LeaveRequestState extends State<LeaveRequest> {
                           ],
                         )),
                   ),
-                  // Container(
-                  //   height: 50,
-                  //   decoration: BoxDecoration(
-                  //       color: AppColors.whiteColor,
-                  //       borderRadius: BorderRadius.circular(8)),
-                  //   width: double.infinity,
-                  //   padding: const EdgeInsets.all(10),
-                  //   margin: const EdgeInsets.all(8),
-                  //   child: Row(
-                  //     children: [
-                  //       Image.asset(
-                  //         "assets/images/tick@2x.png",
-                  //         width: 20,
-                  //         height: 20,
-                  //       ),
-                  //       const SizedBox(
-                  //         width: 10,
-                  //       ),
-                  //       const Text(
-                  //         "2 Tasks",
-                  //         style: TextStyle(
-                  //             decoration: TextDecoration.underline,
-                  //             fontFamily: 'Inter',
-                  //             fontSize: 16,
-                  //             color: AppColors.blueColor),
-                  //       ),
-                  //       const SizedBox(
-                  //         width: 3,
-                  //       ),
-                  //       TextLight(
-                  //         text: "assigned in this duration",
-                  //         color: AppColors.blackColor,
-                  //         size: 16,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -378,7 +341,7 @@ class _LeaveRequestState extends State<LeaveRequest> {
                       child: const Text(
                         'Apply for 5 days leave',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontFamily: 'Inter',
                         ),
                       ),
@@ -394,14 +357,14 @@ class _LeaveRequestState extends State<LeaveRequest> {
   }
 }
 
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
+class DropdownButton extends StatefulWidget {
+  const DropdownButton({super.key});
 
   @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+  State<DropdownButton> createState() => _DropdownButtonState();
 }
 
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+class _DropdownButtonState extends State<DropdownButton> {
   List<String> list = <String>['Half Day', 'Full Day'];
 
   @override

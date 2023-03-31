@@ -50,24 +50,6 @@ class _TeamLeavesState extends State<TeamLeaves> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LeaveRequest(),
-            ),
-          );
-        },
-        backgroundColor: AppColors.blueColor,
-        elevation: 15,
-        splashColor: Colors.grey,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 40,
-        ),
-      ),
       body: Column(
         children: [
           SizedBox(
@@ -337,14 +319,18 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                                           ),
                                                         ),
                                                         child: Theme(
-                                                          data: ThemeData().copyWith(
+                                                          data: ThemeData()
+                                                              .copyWith(
                                                             dividerColor: Colors
                                                                 .transparent,
                                                           ),
                                                           child: Padding(
-                                                            padding: const EdgeInsets.only(
-                                                                    left: 8,
-                                                                    right: 8,),
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              left: 8,
+                                                              right: 8,
+                                                            ),
                                                             child:
                                                                 ExpansionTile(
                                                               title: const Text(
@@ -566,20 +552,33 @@ class _TeamLeavesState extends State<TeamLeaves> {
                                   const SizedBox(
                                     width: 8,
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      BigText(
-                                        text: username!,
-                                        size: 15,
-                                      ),
-                                      TextLight(
-                                        text: "Web Designer",
-                                        size: 13,
-                                        color: AppColors.greyColor,
-                                      ),
-                                    ],
+                                  Container(
+                                    width: width * 0.53,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // BigText(
+                                        //   text: username!,
+                                        //   size: 17,
+                                        // ),
+
+                                        Text(
+                                          username!,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: 15,
+                                          ),
+                                        ),
+
+                                        TextLight(
+                                          text: "Web Designer",
+                                          size: 13,
+                                          color: AppColors.greyColor,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const Spacer(),
                                   Container(
